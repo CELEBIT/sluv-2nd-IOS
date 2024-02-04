@@ -15,20 +15,20 @@
 
 ### 폴더 구조
 <aside>
-├── ***Sluv2***
+>├── Sluv2
 
-│   ├── **App**
+>│   ├── **App**
 
-│   ├── **Extensions**
+>│   ├── **Extensions**
 
-│   ├── **Resource**
+>│   ├── **Resource**
 
-│   │   ├── **Assets.xcassets**
+>│   │   ├── **Assets.xcassets**
 
-│   │   └── **Fonts**
+>│   │   └── **Fonts**
 
-│   ├── **Util**
+>│   ├── **Util**
 
-│   └── **Views**
+>│   └── **Views**
 
 </aside>

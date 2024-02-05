@@ -15,6 +15,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // 기본 네비게이션 바 커스텀
+        let appearance = UINavigationBarAppearance()
+        
+        // 네비게이션 바의 기본 배경을 사용하여 스타일을 구성
+        appearance.configureWithDefaultBackground()
+        
+        // 백버튼의 글자 설정
+        appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        
+        // 배경색을 투명으로 설정
+        appearance.backgroundColor = UIColor.white
+
+        // 밑줄을 없애기
+        appearance.shadowColor = UIColor.clear
+        
+        // 기본 백버튼 이미지 및 위치 설정
+        let backButtonImage = UIImage(named: "arrow_back")?.withRenderingMode(.alwaysOriginal).withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: -12.0, bottom: 0.0, right: 0.0))
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
         return true
     }
 

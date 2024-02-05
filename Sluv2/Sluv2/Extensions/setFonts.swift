@@ -16,6 +16,7 @@ enum BasicFont: String {
 }
 extension UIFont {
     // semibold
+    static let Heading0 = UIFont(name: BasicFont.semibold.rawValue, size: 24)
     static let Heading2 = UIFont(name: BasicFont.semibold.rawValue, size: 18)
     // medium
     static let Heading1 = UIFont(name: BasicFont.medium.rawValue, size: 22)

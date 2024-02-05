@@ -81,6 +81,11 @@ class LoginVC: BaseController {
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,6 +95,11 @@ class LoginVC: BaseController {
         googleBtn.addGestureRecognizer(googleLogin)
         let appleLogin = UITapGestureRecognizer(target: self, action: #selector(appleLogin(_:)))
         appleBtn.addGestureRecognizer(appleLogin)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - Actions

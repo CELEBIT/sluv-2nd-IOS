@@ -1,21 +1,35 @@
 # sluv-2nd-IOS
 
-### 프로젝트 폴더 구조
+### 개발환경 
+- 미니멈 배포버전: iOS 13.0 
+- Xcode 14.3
+
+### iOS 개발 명세
+- 디자인 패턴: MVC 
+- UI: Storyboard
+- 언어: Swift
+- 라이브러리
+  >  IQKeyboardManager: 텍스트필드 키보드 등 제어 <br>
+  >  Moya: 네트워크 통신 <br>
+-  그 외
+
+### 폴더 구조
 <aside>
-├── Sluv2
-
-│   ├── **App**
-
-│   ├── **Extensions**
-
-│   ├── **Resource**
-
-│   │   ├── **Assets.xcassets**
-
-│   │   └── **Fonts**
-
-│   ├── **Util**
-
-│   └── **Views**
+  
+> ├── **Sluv2**
+>
+> │   ├── **App**
+>
+> │   ├── **Extensions**
+>
+> │   ├── **Resource**
+>
+> │   │   ├── **Assets.xcassets**
+>
+> │   │   └── **Fonts**
+>
+> │   ├── **Util**
+>
+> │   └── **Views**
 
 </aside>

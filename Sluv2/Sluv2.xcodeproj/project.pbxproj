@@ -25,6 +25,7 @@
 		091B2F842B6FF5B40050290C /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091B2F7A2B6FF5B40050290C /* Pretendard-ExtraLight.otf */; };
 		091B2F852B6FF5B40050290C /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091B2F7B2B6FF5B40050290C /* Pretendard-Regular.otf */; };
 		095341642B6FFF4E008F7410 /* setFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095341632B6FFF4E008F7410 /* setFonts.swift */; };
+		09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09C3EFB82B709BE9002E2798 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +169,9 @@
 			dependencies = (
 			);
 			name = Sluv2;
+			packageProductDependencies = (
+				09C3EFB82B709BE9002E2798 /* SnapKit */,
+			);
 			productName = Sluv2;
 			productReference = 091B2F4E2B6FF2480050290C /* Sluv2.app */;
 			productType = "com.apple.product-type.application";
@@ -195,6 +200,9 @@
 				Base,
 			);
 			mainGroup = 091B2F452B6FF2480050290C;
+			packageReferences = (
+				09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 091B2F4F2B6FF2480050290C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -444,6 +452,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		09C3EFB82B709BE9002E2798 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		091B2F5A2B6FF2480050290C /* Sluv2.xcdatamodeld */ = {

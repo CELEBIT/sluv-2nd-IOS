@@ -113,7 +113,6 @@
 			children = (
 				091B2F6A2B6FF34B0050290C /* LoginVC.swift */,
 				09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */,
-				09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -141,6 +140,7 @@
 			children = (
 				091B2F6F2B6FF3CC0050290C /* BaseController.swift */,
 				09C3EFBE2B70FF77002E2798 /* CustomButton.swift */,
+				09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";

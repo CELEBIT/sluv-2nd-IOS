@@ -4,19 +4,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Pretendard-Medium.otf">
-            <string>Pretendard-Medium</string>
-        </array>
-        <array key="Pretendard-SemiBold.otf">
-            <string>Pretendard-SemiBold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -27,44 +18,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sluv_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bzD-nf-7ec">
-                                <rect key="frame" x="95.666666666666686" y="211.66666666666666" width="202" height="76.999999999999972"/>
+                                <rect key="frame" x="95.666666666666686" y="387.66666666666669" width="202" height="77"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="202" id="Own-Y5-nuE"/>
-                                    <constraint firstAttribute="height" constant="77" id="mqX-to-I2A"/>
+                                    <constraint firstAttribute="width" constant="202" id="a7d-JJ-c3O"/>
+                                    <constraint firstAttribute="height" constant="77" id="dEZ-ZR-zJD"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="셀럽 아이템 정보 집합소" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RBe-re-AAx">
-                                <rect key="frame" x="112.33333333333333" y="320.66666666666669" width="168.66666666666669" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="168.66999999999999" id="DQT-aZ-j3g"/>
-                                    <constraint firstAttribute="height" constant="22" id="QFO-Xz-Lqa"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Pretendard-SemiBold" family="Pretendard" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v9o-X5-C6L">
-                                <rect key="frame" x="119.66666666666669" y="354.66666666666669" width="154" height="46"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" id="KdH-Ar-fEu"/>
-                                    <constraint firstAttribute="height" constant="46" id="ntB-Mw-T4b"/>
-                                </constraints>
-                                <string key="text">나누고 싶은 셀럽의 정보를
-우리만의 아지트에서!</string>
-                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="15"/>
-                                <color key="textColor" name="Font_gray2"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="v9o-X5-C6L" firstAttribute="top" secondItem="RBe-re-AAx" secondAttribute="bottom" constant="12" id="NTh-3y-3Tq"/>
-                            <constraint firstItem="RBe-re-AAx" firstAttribute="top" secondItem="bzD-nf-7ec" secondAttribute="bottom" constant="32" id="OHB-9g-q5G"/>
-                            <constraint firstItem="bzD-nf-7ec" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="152.5" id="Rde-jQ-7ku"/>
-                            <constraint firstItem="bzD-nf-7ec" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="bOS-ka-HDB"/>
-                            <constraint firstItem="RBe-re-AAx" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="n9m-9U-lgu"/>
-                            <constraint firstItem="v9o-X5-C6L" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="wGJ-mU-peo"/>
+                            <constraint firstItem="bzD-nf-7ec" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Hky-Bw-MIg"/>
+                            <constraint firstItem="bzD-nf-7ec" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="cYa-eS-yPB"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -75,9 +40,6 @@
     </scenes>
     <resources>
         <image name="Sluv_logo" width="202" height="77"/>
-        <namedColor name="Font_gray2">
-            <color red="0.4823529411764706" green="0.53333333333333333" blue="0.58039215686274515" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

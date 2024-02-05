@@ -84,7 +84,7 @@ class RegisterProfileVC: BaseController {
         return closer
     }()
     
-    lazy var doneBtn = CustomButton(btnColor: "Btn-primary-disabled", textColor: "Font-Disabled", title: "동의", actionHandler: tappedDoneBtn, cornerRadius: 12)
+    lazy var doneBtn = CustomButton(btnColor: "Btn-primary-disabled", textColor: "Font-Disabled", title: "완료", actionHandler: tappedDoneBtn, cornerRadius: 12)
     
     
     // MARK: - Lifecycle
@@ -93,6 +93,8 @@ class RegisterProfileVC: BaseController {
         super.viewDidLoad()
         
         nicknameField.delegate = self
+        
+        addImgBtn.addTarget(self, action: #selector(addProfile), for: .touchUpInside)
     }
     
     // MARK: - Actions
@@ -141,6 +143,10 @@ class RegisterProfileVC: BaseController {
         }
     }
     
+    @objc func addProfile() {
+        print("프로필 사진 등록 버튼 클릭!!!!")
+    }
+    
     // MARK: - Helpers
     // 설정, 데이터처리 등 액션 외의 메서드를 정의
 }
@@ -160,6 +166,19 @@ extension RegisterProfileVC: UITextFieldDelegate {
         } else {
             errorLabel.textColor = UIColor.clear
             return true
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        let nickname = nicknameField.text?.count ?? 0
+        if nickname < 16 && nickname > 0 {
+            doneBtn.isEnabled = true
+            doneBtn.backgroundColor = UIColor(named: "Btn-primary")
+            doneBtn.setTitleColor(UIColor(named: "white"), for: .normal)
+        } else {
+            doneBtn.isEnabled = false
+            doneBtn.backgroundColor = UIColor(named: "Btn-primary-disabled")
+            doneBtn.setTitleColor(UIColor(named: "Font-Disabled"), for: .normal)
         }
     }
 }

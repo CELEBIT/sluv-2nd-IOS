@@ -309,6 +309,9 @@ class AgreementVC: BaseController {
         let closer = {
             print("동의 버튼 클릭!!!!!!")
             print("선택약관 동의여부: ", self.button4State)
+            
+            let registerVC = RegisterProfileVC()
+            self.navigationController?.pushViewController(registerVC, animated: true)
         }
         return closer
     }()

@@ -146,6 +146,9 @@ class LoginVC: BaseController {
     // 소셜 로그인
     @objc func kakaoLogin(_ sender: UITapGestureRecognizer) {
         print("kakao 로그인 버튼 클릭\n", sender)
+        
+        let agreeVC = AgreementVC()
+        self.navigationController?.pushViewController(agreeVC, animated: true)
     }
     
     @objc func googleLogin(_ sender: UITapGestureRecognizer) {

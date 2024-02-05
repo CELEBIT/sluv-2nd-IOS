@@ -83,11 +83,19 @@ class LoginVC: BaseController {
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let kakaoLogin = UITapGestureRecognizer(target: self, action: #selector(kakaoLogin(_:)))
+        kakaoBtn.addGestureRecognizer(kakaoLogin)
+        let googleLogin = UITapGestureRecognizer(target: self, action: #selector(googleLogin(_:)))
+        googleBtn.addGestureRecognizer(googleLogin)
+        let appleLogin = UITapGestureRecognizer(target: self, action: #selector(appleLogin(_:)))
+        appleBtn.addGestureRecognizer(appleLogin)
     }
     
     // MARK: - Actions
     // IBAction 및 사용자 인터랙션과 관련된 메서드 정의
     override func configureUI() {
+        view.backgroundColor = UIColor(named: "white")
     }
     
     override func addview() {
@@ -123,6 +131,19 @@ class LoginVC: BaseController {
             a.centerX.equalToSuperview()
             a.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
         }
+    }
+    
+    // 소셜 로그인
+    @objc func kakaoLogin(_ sender: UITapGestureRecognizer) {
+        print("kakao 로그인 버튼 클릭\n", sender)
+    }
+    
+    @objc func googleLogin(_ sender: UITapGestureRecognizer) {
+        print("google 로그인 버튼 클릭\n", sender)
+    }
+    
+    @objc func appleLogin(_ sender: UITapGestureRecognizer) {
+        print("apple 로그인 버튼 클릭\n", sender)
     }
     
     // MARK: - Helpers

@@ -29,6 +29,7 @@
 		09C3EFBB2B70B54D002E2798 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */; };
 		09C3EFBD2B70B57F002E2798 /* DefaultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */; };
 		09C3EFBF2B70FF77002E2798 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBE2B70FF77002E2798 /* CustomButton.swift */; };
+		09C3EFC12B711EDB002E2798 /* RegisterProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
 		09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVC.swift; sourceTree = "<group>"; };
 		09C3EFBE2B70FF77002E2798 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 			children = (
 				091B2F6A2B6FF34B0050290C /* LoginVC.swift */,
 				09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */,
+				09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				09C3EFBF2B70FF77002E2798 /* CustomButton.swift in Sources */,
 				091B2F522B6FF2480050290C /* AppDelegate.swift in Sources */,
 				095341642B6FFF4E008F7410 /* setFonts.swift in Sources */,
+				09C3EFC12B711EDB002E2798 /* RegisterProfileVC.swift in Sources */,
 				091B2F5C2B6FF2480050290C /* Sluv2.xcdatamodeld in Sources */,
 				091B2F702B6FF3CC0050290C /* BaseController.swift in Sources */,
 				091B2F6B2B6FF34B0050290C /* LoginVC.swift in Sources */,

@@ -17,13 +17,13 @@ enum BasicFont: String {
 extension UIFont {
     // semibold
     static let Heading2 = UIFont(name: BasicFont.semibold.rawValue, size: 18)
-    // medium(width:500)
+    // medium
     static let Heading1 = UIFont(name: BasicFont.medium.rawValue, size: 22)
     static let Body1 = UIFont(name: BasicFont.medium.rawValue, size: 18)
     static let Body2 = UIFont(name: BasicFont.medium.rawValue, size: 17)
     static let Body3 = UIFont(name: BasicFont.medium.rawValue, size: 15)
     static let Detail1 = UIFont(name: BasicFont.medium.rawValue, size: 14)
-    // regular(width:400)
+    // regular
     static let Textfield = UIFont(name: BasicFont.regular.rawValue, size: 17)
     static let Detail2 = UIFont(name: BasicFont.regular.rawValue, size: 13)
 }

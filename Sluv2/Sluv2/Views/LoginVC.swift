@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import KakaoSDKUser
 
 class LoginVC: BaseController {
     // MARK: - Properties
@@ -147,8 +148,21 @@ class LoginVC: BaseController {
     @objc func kakaoLogin(_ sender: UITapGestureRecognizer) {
         print("kakao 로그인 버튼 클릭\n", sender)
         
-        let agreeVC = AgreementVC()
-        self.navigationController?.pushViewController(agreeVC, animated: true)
+        // 카카오톡 실행 가능 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.\n")
+                    print("aceessToken: ", oauthToken!.accessToken as String)
+                    
+                    // TODO: 서버에 acccessToken 넘기기
+                }
+            }
+        }
+        
     }
     
     @objc func googleLogin(_ sender: UITapGestureRecognizer) {

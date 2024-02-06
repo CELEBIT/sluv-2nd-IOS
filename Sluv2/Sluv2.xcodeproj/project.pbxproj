@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0903D12C2B7205A7000A790E /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 0903D12B2B7205A7000A790E /* KakaoSDK */; };
 		091B2F522B6FF2480050290C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091B2F512B6FF2480050290C /* AppDelegate.swift */; };
 		091B2F542B6FF2480050290C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091B2F532B6FF2480050290C /* SceneDelegate.swift */; };
 		091B2F5C2B6FF2480050290C /* Sluv2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 091B2F5A2B6FF2480050290C /* Sluv2.xcdatamodeld */; };
@@ -67,6 +68,7 @@
 			files = (
 				09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */,
 				09C3EFC42B71361B002E2798 /* IQKeyboardManagerSwift in Frameworks */,
+				0903D12C2B7205A7000A790E /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,6 +188,7 @@
 			packageProductDependencies = (
 				09C3EFB82B709BE9002E2798 /* SnapKit */,
 				09C3EFC32B71361B002E2798 /* IQKeyboardManagerSwift */,
+				0903D12B2B7205A7000A790E /* KakaoSDK */,
 			);
 			productName = Sluv2;
 			productReference = 091B2F4E2B6FF2480050290C /* Sluv2.app */;
@@ -218,6 +221,7 @@
 			packageReferences = (
 				09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				09C3EFC22B71361B002E2798 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				0903D12A2B7205A7000A790E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 091B2F4F2B6FF2480050290C /* Products */;
 			projectDirPath = "";
@@ -403,6 +407,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6GY9T72LC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sluv2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -430,6 +435,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6GY9T72LC5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sluv2/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -474,6 +480,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0903D12A2B7205A7000A790E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -493,6 +507,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0903D12B2B7205A7000A790E /* KakaoSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0903D12A2B7205A7000A790E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDK;
+		};
 		09C3EFB82B709BE9002E2798 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */;

@@ -6,15 +6,67 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 import CoreData
+import KakaoSDKCommon // Kakao SDK 공통 모듈
+import KakaoSDKAuth // 사용자 인증 및 토큰 관리 모듈
+import KakaoSDKUser // 카카오 로그인 모듈
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    // MARK: - 카카오 로그인_handleOpenURL() & 구글 로그인_인증 리디렉션 URL 처리
+    // iOS 13.0 이하
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // 카카오
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
 
+        // 구글
+        if GIDSignIn.sharedInstance.handle(url) {
+            return true
+        }
+        
+        return false
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // MARK: - 기본 네비게이션 바 커스텀
+        let appearance = UINavigationBarAppearance()
+        
+        // 네비게이션 바의 기본 배경을 사용하여 스타일을 구성
+        appearance.configureWithDefaultBackground()
+        
+        // 백버튼의 글자 설정
+        appearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        
+        // 배경색을 투명으로 설정
+        appearance.backgroundColor = UIColor.white
+
+        // 밑줄을 없애기
+        appearance.shadowColor = UIColor.clear
+        
+        // 기본 백버튼 이미지 및 위치 설정
+        let backButtonImage = UIImage(named: "arrow_back")?.withRenderingMode(.alwaysOriginal).withAlignmentRectInsets(UIEdgeInsets(top: 0.0, left: -12.0, bottom: 0.0, right: 0.0))
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
+        // MARK: - 키보드 관리자
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = false
+        IQKeyboardManager.shared.resignOnTouchOutside = true
+        
+        // MARK: - Kakao SDK 초기화
+        KakaoSDK.initSDK(appKey: "7b9e4a65e4241b6e222f88eb845c4b64")
+
         return true
     }
 

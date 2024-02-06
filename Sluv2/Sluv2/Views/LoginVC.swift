@@ -7,6 +7,9 @@
 
 import UIKit
 import SnapKit
+import KakaoSDKUser
+import GoogleSignInSwift
+import GoogleSignIn
 
 class LoginVC: BaseController {
     // MARK: - Properties
@@ -81,6 +84,11 @@ class LoginVC: BaseController {
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,6 +98,11 @@ class LoginVC: BaseController {
         googleBtn.addGestureRecognizer(googleLogin)
         let appleLogin = UITapGestureRecognizer(target: self, action: #selector(appleLogin(_:)))
         appleBtn.addGestureRecognizer(appleLogin)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.isHidden = false
     }
     
     // MARK: - Actions
@@ -136,10 +149,47 @@ class LoginVC: BaseController {
     // 소셜 로그인
     @objc func kakaoLogin(_ sender: UITapGestureRecognizer) {
         print("kakao 로그인 버튼 클릭\n", sender)
+        
+        // 카카오톡 실행 가능 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("[Kakao] loginWithKakaoTalk() success.\n")
+                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
+                    
+                    // TODO: 서버에 acccessToken 넘기기
+                }
+            }
+        }
+        
+
     }
     
     @objc func googleLogin(_ sender: UITapGestureRecognizer) {
         print("google 로그인 버튼 클릭\n", sender)
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+            guard error == nil else { return }
+            guard let signInResult else { return }
+            
+            let email = signInResult.user.profile?.email
+            let name = signInResult.user.profile?.name
+            
+            let idToken       = signInResult.user.idToken?.tokenString
+            let accessToken   = signInResult.user.accessToken.tokenString
+            let refreshToken  = signInResult.user.refreshToken.tokenString
+            let clientID      = (signInResult.user.userID ?? "") as String
+            
+            print("[Google] signIn() success.\n")
+            print("* 구글 aceessToken: ", accessToken)
+            
+            // TODO: 서버에 acccessToken 넘기기
+            
+        }
+        
     }
     
     @objc func appleLogin(_ sender: UITapGestureRecognizer) {

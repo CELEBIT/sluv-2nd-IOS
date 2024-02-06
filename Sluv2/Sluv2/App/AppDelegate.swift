@@ -8,11 +8,30 @@
 import UIKit
 import IQKeyboardManagerSwift
 import CoreData
+import KakaoSDKCommon // Kakao SDK 공통 모듈
+import KakaoSDKAuth // 사용자 인증 및 토큰 관리 모듈
+import KakaoSDKUser // 카카오 로그인 모듈
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    // MARK: - 카카오 로그인_handleOpenURL() & 구글 로그인_인증 리디렉션 URL 처리
+    // iOS 13.0 이하
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // 카카오
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
 
+        // 구글
+        if GIDSignIn.sharedInstance.handle(url) {
+            return true
+        }
+        
+        return false
+    }
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -44,6 +63,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
+        
+        // MARK: - Kakao SDK 초기화
+        KakaoSDK.initSDK(appKey: "7b9e4a65e4241b6e222f88eb845c4b64")
 
         return true
     }

@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import KakaoSDKUser
+import GoogleSignInSwift
+import GoogleSignIn
 
 class LoginVC: BaseController {
     // MARK: - Properties
@@ -155,8 +157,8 @@ class LoginVC: BaseController {
                     print(error)
                 }
                 else {
-                    print("loginWithKakaoTalk() success.\n")
-                    print("aceessToken: ", oauthToken!.accessToken as String)
+                    print("[Kakao] loginWithKakaoTalk() success.\n")
+                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
                     
                     // TODO: 서버에 acccessToken 넘기기
                 }
@@ -167,6 +169,26 @@ class LoginVC: BaseController {
     
     @objc func googleLogin(_ sender: UITapGestureRecognizer) {
         print("google 로그인 버튼 클릭\n", sender)
+        
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { signInResult, error in
+            guard error == nil else { return }
+            guard let signInResult else { return }
+            
+            let email = signInResult.user.profile?.email
+            let name = signInResult.user.profile?.name
+            
+            let idToken       = signInResult.user.idToken?.tokenString
+            let accessToken   = signInResult.user.accessToken.tokenString
+            let refreshToken  = signInResult.user.refreshToken.tokenString
+            let clientID      = (signInResult.user.userID ?? "") as String
+            
+            print("[Google] signIn() success.\n")
+            print("* 구글 aceessToken: ", accessToken)
+            
+            // TODO: 서버에 acccessToken 넘기기
+            
+        }
+        
     }
     
     @objc func appleLogin(_ sender: UITapGestureRecognizer) {

@@ -185,6 +185,9 @@ class LoginVC: BaseController {
             
             print("[Google] signIn() success.\n")
             print("* 구글 aceessToken: ", accessToken)
+            print("* 구글 idToken: ", idToken!)
+            print("* 구글 clientID: ", clientID)
+            print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
             

@@ -28,6 +28,13 @@
 		095341642B6FFF4E008F7410 /* setFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095341632B6FFF4E008F7410 /* setFonts.swift */; };
 		099B10252B725BB8007073F5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 099B10242B725BB8007073F5 /* GoogleSignIn */; };
 		099B10272B725BB8007073F5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 099B10262B725BB8007073F5 /* GoogleSignInSwift */; };
+		09C1646D2B73CA110059EB94 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C1646C2B73CA110059EB94 /* AuthAPI.swift */; };
+		09C164702B73CAD40059EB94 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C1646F2B73CAD40059EB94 /* CombineMoya */; };
+		09C164722B73CAD40059EB94 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C164712B73CAD40059EB94 /* Moya */; };
+		09C164742B73CAD40059EB94 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C164732B73CAD40059EB94 /* ReactiveMoya */; };
+		09C164762B73CAD40059EB94 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C164752B73CAD40059EB94 /* RxMoya */; };
+		09C164782B73CB650059EB94 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C164772B73CB650059EB94 /* EndPoint.swift */; };
+		09C1647A2B73CDBB0059EB94 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C164792B73CDBB0059EB94 /* AuthModel.swift */; };
 		09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09C3EFB82B709BE9002E2798 /* SnapKit */; };
 		09C3EFBB2B70B54D002E2798 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */; };
 		09C3EFBD2B70B57F002E2798 /* DefaultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */; };
@@ -57,6 +64,9 @@
 		091B2F7A2B6FF5B40050290C /* Pretendard-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.otf"; sourceTree = "<group>"; };
 		091B2F7B2B6FF5B40050290C /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		095341632B6FFF4E008F7410 /* setFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setFonts.swift; sourceTree = "<group>"; };
+		09C1646C2B73CA110059EB94 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		09C164772B73CB650059EB94 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		09C164792B73CDBB0059EB94 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
 		09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVC.swift; sourceTree = "<group>"; };
 		09C3EFBE2B70FF77002E2798 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -70,8 +80,12 @@
 			files = (
 				099B10272B725BB8007073F5 /* GoogleSignInSwift in Frameworks */,
 				09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */,
+				09C164702B73CAD40059EB94 /* CombineMoya in Frameworks */,
 				099B10252B725BB8007073F5 /* GoogleSignIn in Frameworks */,
 				09C3EFC42B71361B002E2798 /* IQKeyboardManagerSwift in Frameworks */,
+				09C164742B73CAD40059EB94 /* ReactiveMoya in Frameworks */,
+				09C164762B73CAD40059EB94 /* RxMoya in Frameworks */,
+				09C164722B73CAD40059EB94 /* Moya in Frameworks */,
 				0903D12C2B7205A7000A790E /* KakaoSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +112,7 @@
 		091B2F502B6FF2480050290C /* Sluv2 */ = {
 			isa = PBXGroup;
 			children = (
+				09C164692B73C98F0059EB94 /* Data */,
 				091B2F6E2B6FF3B30050290C /* Util */,
 				091B2F6D2B6FF39B0050290C /* Resource */,
 				091B2F6C2B6FF3800050290C /* Extensions */,
@@ -173,6 +188,32 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		09C164692B73C98F0059EB94 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				09C1646B2B73C9DF0059EB94 /* Model */,
+				09C1646A2B73C9D70059EB94 /* Network */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		09C1646A2B73C9D70059EB94 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				09C1646C2B73CA110059EB94 /* AuthAPI.swift */,
+				09C164772B73CB650059EB94 /* EndPoint.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		09C1646B2B73C9DF0059EB94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				09C164792B73CDBB0059EB94 /* AuthModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -195,6 +236,10 @@
 				0903D12B2B7205A7000A790E /* KakaoSDK */,
 				099B10242B725BB8007073F5 /* GoogleSignIn */,
 				099B10262B725BB8007073F5 /* GoogleSignInSwift */,
+				09C1646F2B73CAD40059EB94 /* CombineMoya */,
+				09C164712B73CAD40059EB94 /* Moya */,
+				09C164732B73CAD40059EB94 /* ReactiveMoya */,
+				09C164752B73CAD40059EB94 /* RxMoya */,
 			);
 			productName = Sluv2;
 			productReference = 091B2F4E2B6FF2480050290C /* Sluv2.app */;
@@ -229,6 +274,7 @@
 				09C3EFC22B71361B002E2798 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				0903D12A2B7205A7000A790E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				099B10232B725BB8007073F5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 091B2F4F2B6FF2480050290C /* Products */;
 			projectDirPath = "";
@@ -268,9 +314,12 @@
 			files = (
 				09C3EFBD2B70B57F002E2798 /* DefaultVC.swift in Sources */,
 				09C3EFBB2B70B54D002E2798 /* AgreementVC.swift in Sources */,
+				09C1646D2B73CA110059EB94 /* AuthAPI.swift in Sources */,
+				09C1647A2B73CDBB0059EB94 /* AuthModel.swift in Sources */,
 				09C3EFBF2B70FF77002E2798 /* CustomButton.swift in Sources */,
 				091B2F522B6FF2480050290C /* AppDelegate.swift in Sources */,
 				095341642B6FFF4E008F7410 /* setFonts.swift in Sources */,
+				09C164782B73CB650059EB94 /* EndPoint.swift in Sources */,
 				09C3EFC12B711EDB002E2798 /* RegisterProfileVC.swift in Sources */,
 				091B2F5C2B6FF2480050290C /* Sluv2.xcdatamodeld in Sources */,
 				091B2F702B6FF3CC0050290C /* BaseController.swift in Sources */,
@@ -503,6 +552,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
 		09C3EFB72B709BE9002E2798 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -536,6 +593,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 099B10232B725BB8007073F5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		09C1646F2B73CAD40059EB94 /* CombineMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = CombineMoya;
+		};
+		09C164712B73CAD40059EB94 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		09C164732B73CAD40059EB94 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		09C164752B73CAD40059EB94 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
 		};
 		09C3EFB82B709BE9002E2798 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

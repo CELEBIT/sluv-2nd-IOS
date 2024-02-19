@@ -166,6 +166,7 @@ class LoginVC: BaseController {
     
                     // TODO: 서버에 acccessToken 넘기기
                     self.doSocialLogin(token: accessToken, snsType: "KAKAO")
+                    
                 }
             }
         }

@@ -160,6 +160,8 @@ class LoginVC: BaseController {
                     print("[Kakao] loginWithKakaoTalk() success.\n")
                     print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
                     
+                    let accessToken: String = oauthToken!.accessToken as String
+                    
                     // TODO: 서버에 acccessToken 넘기기
                 }
             }
@@ -175,8 +177,8 @@ class LoginVC: BaseController {
             guard error == nil else { return }
             guard let signInResult else { return }
             
-            let email = signInResult.user.profile?.email
-            let name = signInResult.user.profile?.name
+            _ = signInResult.user.profile?.email
+            _ = signInResult.user.profile?.name
             
             let idToken       = signInResult.user.idToken?.tokenString
             let accessToken   = signInResult.user.accessToken.tokenString

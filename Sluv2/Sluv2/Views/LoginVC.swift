@@ -162,7 +162,11 @@ class LoginVC: BaseController {
                     
                     let accessToken: String = oauthToken!.accessToken as String
                     
+                    print(oauthToken)
+    
                     // TODO: 서버에 acccessToken 넘기기
+                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")
+                    
                 }
             }
         }
@@ -180,25 +184,39 @@ class LoginVC: BaseController {
             _ = signInResult.user.profile?.email
             _ = signInResult.user.profile?.name
             
-            let idToken       = signInResult.user.idToken?.tokenString
+            let idToken       = signInResult.user.idToken?.tokenString as? String
             let accessToken   = signInResult.user.accessToken.tokenString
             let refreshToken  = signInResult.user.refreshToken.tokenString
             let clientID      = (signInResult.user.userID ?? "") as String
             
             print("[Google] signIn() success.\n")
             print("* 구글 aceessToken: ", accessToken)
-            print("* 구글 idToken: ", idToken!)
+            print("* 구글 idToken: ", idToken ?? "idToken이 비었습니다.")
             print("* 구글 clientID: ", clientID)
             print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
-            
+            self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE")
         }
         
     }
     
     @objc func appleLogin(_ sender: UITapGestureRecognizer) {
         print("apple 로그인 버튼 클릭\n", sender)
+    }
+    
+    func doSocialLogin(token: String, snsType: String) {
+        let param: SocialLoginModel = SocialLoginModel(accessToken: token, snsType: snsType)
+        AuthManager.shared.getAccessToken(token: param) { result in
+            switch result {
+            case .success(let token):
+                print("소셜로그인 서버 통신 성공")
+                print("발급받은 토큰: \(token)")
+            case .failure(let error):
+                print("소셜로그인 서버 통신 실패")
+                print("에러: \(error)")
+            }
+        }
     }
     
     // MARK: - Helpers

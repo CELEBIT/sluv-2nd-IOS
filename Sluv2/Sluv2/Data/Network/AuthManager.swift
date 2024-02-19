@@ -8,8 +8,9 @@
 import Foundation
 import Moya
 
-enum StringError: Error {
-    case customError(String)
+enum MyError: Error {
+    case customStringError(String)
+    case communicationFailureError(Error)
 }
 
 class AuthManager {
@@ -27,11 +28,11 @@ class AuthManager {
                         let result: [String : Any] = json["result"] as? [String : Any] ?? ["token" : "", "userStatus" : ""]
                         completion(.success(result["token"] as! String))
                     } else {
-                        completion(.failure(StringError.customError(json["message"] as! String)))
+                        completion(.failure(MyError.customStringError(json["message"] as! String)))
                     }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                completion(.failure(MyError.communicationFailureError(error)))
             }
             
         }

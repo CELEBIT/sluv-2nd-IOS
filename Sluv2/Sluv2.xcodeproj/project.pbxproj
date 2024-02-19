@@ -35,6 +35,7 @@
 		09C164762B73CAD40059EB94 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C164752B73CAD40059EB94 /* RxMoya */; };
 		09C164782B73CB650059EB94 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C164772B73CB650059EB94 /* EndPoint.swift */; };
 		09C1647A2B73CDBB0059EB94 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C164792B73CDBB0059EB94 /* AuthModel.swift */; };
+		09C1647C2B83B2280059EB94 /* WebviewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C1647B2B83B2280059EB94 /* WebviewVC.swift */; };
 		09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 09C3EFB82B709BE9002E2798 /* SnapKit */; };
 		09C3EFBB2B70B54D002E2798 /* AgreementVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */; };
 		09C3EFBD2B70B57F002E2798 /* DefaultVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */; };
@@ -67,6 +68,7 @@
 		09C1646C2B73CA110059EB94 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		09C164772B73CB650059EB94 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		09C164792B73CDBB0059EB94 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		09C1647B2B83B2280059EB94 /* WebviewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebviewVC.swift; sourceTree = "<group>"; };
 		09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementVC.swift; sourceTree = "<group>"; };
 		09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVC.swift; sourceTree = "<group>"; };
 		09C3EFBE2B70FF77002E2798 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				091B2F6A2B6FF34B0050290C /* LoginVC.swift */,
 				09C3EFBA2B70B54D002E2798 /* AgreementVC.swift */,
 				09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */,
+				09C1647B2B83B2280059EB94 /* WebviewVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				09C164782B73CB650059EB94 /* EndPoint.swift in Sources */,
 				09C3EFC12B711EDB002E2798 /* RegisterProfileVC.swift in Sources */,
 				091B2F5C2B6FF2480050290C /* Sluv2.xcdatamodeld in Sources */,
+				09C1647C2B83B2280059EB94 /* WebviewVC.swift in Sources */,
 				091B2F702B6FF3CC0050290C /* BaseController.swift in Sources */,
 				091B2F6B2B6FF34B0050290C /* LoginVC.swift in Sources */,
 				091B2F542B6FF2480050290C /* SceneDelegate.swift in Sources */,

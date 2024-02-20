@@ -12,6 +12,7 @@ import KakaoSDKCommon // Kakao SDK 공통 모듈
 import KakaoSDKAuth // 사용자 인증 및 토큰 관리 모듈
 import KakaoSDKUser // 카카오 로그인 모듈
 import GoogleSignIn
+import AuthenticationServices
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -66,6 +67,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MARK: - Kakao SDK 초기화
         KakaoSDK.initSDK(appKey: "7b9e4a65e4241b6e222f88eb845c4b64")
+        
+        // MARK: - Apple 로그인 상태 확인
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: "appleIdToken") ?? "" /* 로그인에 사용한 User Identifier */) { (credentialState, error) in
+            switch credentialState {
+            case .authorized:
+                // The Apple ID credential is valid.
+                print("해당 ID는 연동되어있습니다.")
+            case .revoked:
+                // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+                print("해당 ID는 연동되어있지않습니다.")
+            case .notFound:
+                // The Apple ID credential is either was not found, so show the sign-in UI.
+                print("해당 ID를 찾을 수 없습니다.")
+            default:
+                break
+            }
+        }
+        
+        // MARK: - 앱 실행 중 강제로 앱에 대한 Apple ID 사용이 중단 됐을 때.
+        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (Notification) in
+            print("Revoked Notification")
+            // 로그인 페이지로 이동
+            guard let window = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window else { return }
+            window.rootViewController = UINavigationController(rootViewController: LoginVC()) // 전환
+            UIView.transition(with: window, duration: 0.26, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+        }
 
         return true
     }

@@ -10,6 +10,7 @@ import SnapKit
 import KakaoSDKUser
 import GoogleSignInSwift
 import GoogleSignIn
+import AuthenticationServices
 
 class LoginVC: BaseController {
     // MARK: - Properties
@@ -203,6 +204,14 @@ class LoginVC: BaseController {
     
     @objc func appleLogin(_ sender: UITapGestureRecognizer) {
         print("apple 로그인 버튼 클릭\n", sender)
+        
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self // ASAuthorizationControllerDelegate
+        controller.presentationContextProvider = self // ASAuthorizationControllerPresentationContextProviding
+        controller.performRequests()
     }
     
     func doSocialLogin(token: String, snsType: String) {
@@ -210,10 +219,10 @@ class LoginVC: BaseController {
         AuthManager.shared.getAccessToken(token: param) { result in
             switch result {
             case .success(let token):
-                print("소셜로그인 서버 통신 성공")
+                print("\(snsType) 소셜로그인 서버 통신 성공")
                 print("발급받은 토큰: \(token)")
             case .failure(let error):
-                print("소셜로그인 서버 통신 실패")
+                print("\(snsType) 소셜로그인 서버 통신 실패")
                 print("에러: \(error)")
             }
         }
@@ -221,4 +230,42 @@ class LoginVC: BaseController {
     
     // MARK: - Helpers
     // 설정, 데이터처리 등 액션 외의 메서드를 정의
+}
+
+extension LoginVC: ASAuthorizationControllerDelegate {
+    
+    // 성공 후 동작
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+
+            let idToken = credential.identityToken!
+            let tokenString = String(data: idToken, encoding: .utf8)
+            print("idToken: ", tokenString ?? "비었음")
+
+            guard let code = credential.authorizationCode else { return }
+            let codeString = String(data: code, encoding: .utf8)
+            print("codeString: ", codeString ?? "비었음")
+
+            let user = credential.user
+            print("user: ", user)
+            
+            // idToken 저장
+            UserDefaults.standard.set(tokenString, forKey: "appleIdToken")
+            // TODO: 서버에 acccessToken 넘기기
+            self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE")
+        }
+    }
+
+    // 실패 후 동작
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("애플 로그인 error: ", error)
+    }
+    
+}
+
+extension LoginVC: ASAuthorizationControllerPresentationContextProviding {
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
 }

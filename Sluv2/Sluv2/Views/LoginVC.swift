@@ -218,9 +218,17 @@ class LoginVC: BaseController {
         let param: SocialLoginModel = SocialLoginModel(accessToken: token, snsType: snsType)
         AuthManager.shared.getAccessToken(token: param) { result in
             switch result {
-            case .success(let token):
+            case .success(let result):
                 print("\(snsType) 소셜로그인 서버 통신 성공")
-                print("발급받은 토큰: \(token)")
+                print("발급받은 토큰: \(String(describing: result["token"]))")
+                
+                // 토큰 발급 성공시 웹뷰로 화면전환
+                let root = WebviewVC()
+                root.token = result["token"] as! String
+                root.status = result["userStatus"] as! String
+                let vc = UINavigationController(rootViewController: root)
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+                
             case .failure(let error):
                 print("\(snsType) 소셜로그인 서버 통신 실패")
                 print("에러: \(error)")

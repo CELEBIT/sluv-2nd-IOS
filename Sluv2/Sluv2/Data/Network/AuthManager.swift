@@ -19,14 +19,14 @@ class AuthManager {
     lazy var provider = MoyaProvider<AuthAPI>()
     
     // 소셜 로그인
-    func getAccessToken(token: SocialLoginModel, completion: @escaping (Result<String, Error>) -> Void ) {
+    func getAccessToken(token: SocialLoginModel, completion: @escaping (Result<[String : Any], Error>) -> Void ) {
         provider.request(.socialLogin(param: token)) { result in
             switch result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data.data, options: []) as? [String : Any] {
                     if json["isSuccess"] as? Bool == true {
                         let result: [String : Any] = json["result"] as? [String : Any] ?? ["token" : "", "userStatus" : ""]
-                        completion(.success(result["token"] as! String))
+                        completion(.success(result))
                     } else {
                         completion(.failure(MyError.customStringError(json["message"] as! String)))
                     }

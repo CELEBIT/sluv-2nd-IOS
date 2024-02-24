@@ -7,12 +7,15 @@
 
 import UIKit
 import WebKit
+import YPImagePicker
 
 class WebviewVC: BaseController{
     // MARK: - Properties
     // 변수 및 상수, IBOutlet
 
     var webView: WKWebView!
+    var token: String = ""
+    var status: String = ""
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
@@ -76,6 +79,8 @@ extension WebviewVC: WKUIDelegate {
         
         view = webView
     }
+    
+    
 }
 
 // MARK: - WKNavigationDelegate
@@ -84,5 +89,49 @@ extension WebviewVC: WKNavigationDelegate {
     // 웹 페이지 로드 완료 시 호출됨
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("웹 페이지 로드 완료")
+        
+        // 웹으로 토큰 및 유저 상태 보내기
+        setToken(token: token, userStatus: status)
+    }
+    
+    // 웹으로 토큰 및 유저 상태 보내는 함수
+    func setToken(token: String, userStatus: String) {
+        
+        let token = ["token": token] as [String : Any]
+        let status = ["status": userStatus] as [String : Any]
+        
+        do {
+            // 토큰
+            let TokenJsonData = try JSONSerialization.data(withJSONObject: token, options: [])
+
+            if let tokenJsonString = String(data: TokenJsonData, encoding: .utf8) {
+                webView.evaluateJavaScript("javascript:window.setToken = ('\(tokenJsonString)');") { (result, error) in
+                    if let error {
+                        print("token 세팅 에러: ", error)
+                    }
+                    if let result {
+                        print("token 세팅 결과: ", result)
+                    }
+                }
+            }
+            
+            // 유저 상태
+            let StatusJsonData = try JSONSerialization.data(withJSONObject: status, options: [])
+
+            if let statusJsonString = String(data: StatusJsonData, encoding: .utf8) {
+                webView.evaluateJavaScript("javascript:window.setUserStatus = ('\(statusJsonString)');") { (result, error) in
+                    if let error {
+                        print("status 세팅 에러: ", error)
+                    }
+                    if let result {
+                        print("status 세팅 결과: ", result)
+                    }
+                }
+            }
+            
+        } catch {
+            print("웹 통신 실패")
+        }
+
     }
 }

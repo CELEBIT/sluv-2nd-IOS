@@ -16,6 +16,7 @@ class WebviewVC: BaseController{
     var webView: WKWebView!
     var token: String = ""
     var status: String = ""
+    var selectedImage: [YPMediaItem] = []
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)

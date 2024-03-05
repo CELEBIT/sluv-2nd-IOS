@@ -28,7 +28,7 @@ class WebviewVC: BaseController{
         
         // WebView 불러오기
         let myURL = ServiceAPI.webURL
-        let myRequest = URLRequest(url: myURL!)
+        let myRequest = URLRequest(url: URL(string: myURL + "/?accessToken=\(token)&userStatus=\(status)")!)
         webView.load(myRequest)
         
     }
@@ -78,7 +78,25 @@ extension WebviewVC: WKUIDelegate {
         //뒤로가기, 앞으로가기 제스쳐 사용
         webView.allowsBackForwardNavigationGestures = true
         
+        // ios 16.4 에서 DEBUG 모드인 경우에만
+        // webview inspector 가능하도록 설정
+        if #available(iOS 16.4, *) {
+            #if DEBUG
+            webView.isInspectable = true  // webview inspector 가능하도록 설정
+            #endif
+        }
+        
         view = webView
+        
+        // 모든 열어본 페이지에 대한 캐시 데이터를 모두 삭제
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), completionHandler: {
+            (records) -> Void in
+            for record in records {
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+                // remove callback
+             }
+         })
+        
     }
     
     
@@ -92,7 +110,18 @@ extension WebviewVC: WKNavigationDelegate {
         print("웹 페이지 로드 완료")
         
         // 웹으로 토큰 및 유저 상태 보내기
-        setToken(token: token, userStatus: status)
+//        setToken(token: token, userStatus: status)
+    }
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: message, message: nil,
+                                                    preferredStyle: .alert);
+
+        alertController.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel) {
+            _ in completionHandler()}
+        );
+
+        self.present(alertController, animated: true, completion: {});
     }
     
     // 웹으로 토큰 및 유저 상태 보내는 함수
@@ -106,7 +135,7 @@ extension WebviewVC: WKNavigationDelegate {
             let TokenJsonData = try JSONSerialization.data(withJSONObject: token, options: [])
 
             if let tokenJsonString = String(data: TokenJsonData, encoding: .utf8) {
-                webView.evaluateJavaScript("javascript:window.setToken = ('\(tokenJsonString)');") { (result, error) in
+                webView.evaluateJavaScript("window.setToken('\(tokenJsonString)');") { (result, error) in
                     if let error {
                         print("token 세팅 에러: ", error)
                     }
@@ -120,7 +149,7 @@ extension WebviewVC: WKNavigationDelegate {
             let StatusJsonData = try JSONSerialization.data(withJSONObject: status, options: [])
 
             if let statusJsonString = String(data: StatusJsonData, encoding: .utf8) {
-                webView.evaluateJavaScript("javascript:window.setUserStatus = ('\(statusJsonString)');") { (result, error) in
+                webView.evaluateJavaScript("window.setUserStatus('\(statusJsonString)');") { (result, error) in
                     if let error {
                         print("status 세팅 에러: ", error)
                     }

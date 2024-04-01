@@ -9,5 +9,5 @@ import Foundation
 
 enum ServiceAPI {
     static let baseURL = URL(string: "http://123.142.238.147:8082")
-    static let webURL = "https://develop.d1ff59r8egbr9x.amplifyapp.com"
+    static let webURL = "https://www.sluv.co.kr"
 }

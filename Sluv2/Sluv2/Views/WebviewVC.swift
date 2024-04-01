@@ -88,15 +88,6 @@ extension WebviewVC: WKUIDelegate {
         
         view = webView
         
-        // 모든 열어본 페이지에 대한 캐시 데이터를 모두 삭제
-        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(), completionHandler: {
-            (records) -> Void in
-            for record in records {
-                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
-                // remove callback
-             }
-         })
-        
     }
     
     

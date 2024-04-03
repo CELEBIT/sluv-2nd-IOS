@@ -16,7 +16,8 @@ class WebviewVC: BaseController{
     var webView: WKWebView!
     var token: String = ""
     var status: String = ""
-    var selectedImage: [YPMediaItem] = []
+//    var selectedImage: [YPMediaItem] = []
+    var base64Image: [String] = []
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
@@ -55,7 +56,11 @@ class WebviewVC: BaseController{
 // MARK: - WKUIDelegate
 extension WebviewVC: WKUIDelegate {
     override func loadView() {
+        let contentController = WKUserContentController()
+        contentController.add(self, name: "IOSBridge")
+
         let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.userContentController = contentController
         
         let frame = UIScreen.main.bounds
         webView = WKWebView(frame: frame, configuration: webConfiguration)
@@ -105,15 +110,18 @@ extension WebviewVC: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
-        let alertController = UIAlertController(title: message, message: nil,
-                                                    preferredStyle: .alert);
-
-        alertController.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel) {
-            _ in completionHandler()}
-        );
-
-        self.present(alertController, animated: true, completion: {});
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "확인", style: .cancel) { _ in
+            print("컴플리션 핸들러 호출")
+            completionHandler()
+        })
+        
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
+
     
     // 웹으로 토큰 및 유저 상태 보내는 함수
     func setToken(token: String, userStatus: String) {
@@ -155,4 +163,34 @@ extension WebviewVC: WKNavigationDelegate {
         }
 
     }
+    
+    // 웹 뷰 통신
+}
+
+extension WebviewVC: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "IOSBridge", let jsonString = message.body as? String {
+            print("아아아아아")
+            print(message.body)
+            
+            // Parse JSON
+            if let data = jsonString.data(using: .utf8) {
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+
+                        guard let type = json["type"] as? String else { return }
+                        guard let totalPhotos = json["totalPhotos"] as? Int else { return }
+                        guard let photosToSelect = json["photosToSelect"] as? Int else { return }
+                        
+                        loadImagePicker(maxPicNum: photosToSelect)
+                        
+                    }
+                } catch {
+                    print("Error parsing JSON:", error)
+                }
+            }
+        }
+        
+    }
+
 }

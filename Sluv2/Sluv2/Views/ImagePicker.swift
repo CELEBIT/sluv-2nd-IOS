@@ -11,7 +11,8 @@ import UIKit
 import Photos
 
 extension WebviewVC {
-    @objc func loadImagePicker() {
+    @objc func loadImagePicker(maxPicNum: Int) {
+        base64Image = []
         
         var config = YPImagePickerConfiguration()
 
@@ -23,15 +24,15 @@ extension WebviewVC {
         config.preferredStatusBarStyle = UIStatusBarStyle.default
         
         config.library.defaultMultipleSelection = false // 한장 선택 default (여러장 선택x)
-        config.library.maxNumberOfItems = 5 // 사진 최대 선택 개수 5장
+        config.library.maxNumberOfItems = maxPicNum // 사진 최대 선택 개수 설정
         config.library.mediaType = .photo // 옵션 : photo, video, photo and video
-        config.library.preselectedItems = selectedImage // 사진 선택후 뒤로 갔을때 초기화 되지 않기 위함
+//        config.library.preselectedItems = selectedImage // 사진 선택후 뒤로 갔을때 초기화 되지 않기 위함
         config.overlayView?.contentMode = .scaleAspectFit // 사진 스케일
 
         let picker = YPImagePicker(configuration: config)
         
         // 사진 선택 완료후,,
-        picker.didFinishPicking { [unowned picker] items, cancelled in
+        picker.didFinishPicking { [self, unowned picker] items, cancelled in
             if cancelled {
                 // 취소 눌렀을때
                 picker.dismiss(animated: true)
@@ -55,6 +56,10 @@ extension WebviewVC {
                             print("경도: \(String(describing: metadata?.location?.coordinate.longitude))")
                             print("시간: \(String(describing: metadata?.location?.timestamp))")
                         }
+                        
+
+                        self.base64Image.append(self.changeToBase64String(image: image) ?? "imageNone")
+                        
                     default:
                         break
                     }
@@ -62,7 +67,21 @@ extension WebviewVC {
 
                 // 선택한 아이템들 (뒤로갔을때 선택이 남아있게끔하기 위함)
                 // 타입 : [YPMediaItem]
-                self.selectedImage = items
+//                self.selectedImage = items
+                
+                print(self.base64Image.count)
+                
+                sendImagesToWeb(base64ImageArray: base64Image)
+                
+//                let json = try? JSONSerialization.data(withJSONObject: selectedImage)
+//                if let jsonString = String(data: json!, encoding: .utf8) {
+//                    let script = "window.getImageFromIOS('\(selectedImage)');"
+//                    webView.evaluateJavaScript(script) { (_, error) in
+//                        if let error = error {
+//                            print("Error evaluating JavaScript: \(error)")
+//                        }
+//                    }
+//                }
                 
                 // 이미지 피커뷰 닫기
                 picker.dismiss(animated: false)
@@ -75,5 +94,31 @@ extension WebviewVC {
         picker.modalPresentationStyle = .fullScreen
         present(picker, animated: true, completion: nil)
 
+    }
+    
+    // 이미지를 Base64로 인코딩하여 문자열로 반환
+    func changeToBase64String(image: UIImage) -> String? {
+        guard let imageData = image.jpegData(compressionQuality: 1.0) else { return nil }
+        return imageData.base64EncodedString()
+    }
+    
+    func sendImagesToWeb(base64ImageArray: [Any]) {
+        // JavaScript 코드를 문자열로 작성
+        // 배열을 JSON 문자열로 변환
+        if let jsonData = try? JSONSerialization.data(withJSONObject: base64ImageArray, options: []),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            // WebView에서 실행할 JavaScript 함수 호출
+            // 이 예제에서는 'getImageFromIOS' 이벤트 리스너에 메시지를 전송
+            let jsCode = "window.dispatchEvent(new CustomEvent('getImageFromIOS', { detail: \(jsonString) }));"
+            webView.evaluateJavaScript(jsCode, completionHandler: { (result, error) in
+                if let error = error {
+                    print("Error sending images to web: ", error)
+                }
+                if let result = result {
+                    print("Success sending images to web: ", result)
+                }
+                
+            })
+        }
     }
 }

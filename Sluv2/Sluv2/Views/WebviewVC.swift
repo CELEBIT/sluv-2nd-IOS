@@ -179,11 +179,28 @@ extension WebviewVC: WKScriptMessageHandler {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
 
                         guard let type = json["type"] as? String else { return }
-                        guard let totalPhotos = json["totalPhotos"] as? Int else { return }
-                        guard let photosToSelect = json["photosToSelect"] as? Int else { return }
-                        
-                        loadImagePicker(maxPicNum: photosToSelect)
-                        
+                        switch type {
+                        case "openGallery":
+                            print("MessageHandelr: \(type)")
+                            
+                            guard let totalPhotos = json["totalPhotos"] as? Int else { return }
+                            guard let photosToSelect = json["photosToSelect"] as? Int else { return }
+                            
+                            loadImagePicker(maxPicNum: photosToSelect)
+                        case "logout":
+                            print("MessageHandelr: \(type)")
+                            
+                            goToLoginVC()
+                            break
+                        case "withdraw":
+                            print("MessageHandelr: \(type)")
+                            
+                            goToLoginVC()
+                            break
+                        default:
+                            print("정의하지 않은 MessageHandler입니다.")
+                        }
+
                     }
                 } catch {
                     print("Error parsing JSON:", error)
@@ -191,6 +208,12 @@ extension WebviewVC: WKScriptMessageHandler {
             }
         }
         
+    }
+    
+    func goToLoginVC() {
+        let root = LoginVC()
+        let vc = UINavigationController(rootViewController: root) // 네비게이션 컨트롤러 추가
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
     }
 
 }

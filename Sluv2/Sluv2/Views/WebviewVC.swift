@@ -72,6 +72,9 @@ extension WebviewVC: WKUIDelegate {
             scrollView.backgroundColor = UIColor(named: "white")
         }
         
+        webView.backgroundColor = .clear
+        webView.isOpaque = false
+        
         // WebView Bounce, Indicator(스크롤 바) 제거
         webView.scrollView.bounces = false
         webView.scrollView.showsVerticalScrollIndicator = false
@@ -195,6 +198,8 @@ extension WebviewVC: WKScriptMessageHandler {
                         case "withdraw":
                             print("MessageHandelr: \(type)")
                             
+                            ManageLogin.isMember = false
+                            ManageLogin.kindOfLogin = ""
                             goToLoginVC()
                             break
                         default:

@@ -145,6 +145,45 @@ class LoginVC: BaseController {
             a.centerX.equalToSuperview()
             a.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
         }
+        
+        setBubbleView()
+
+    }
+    
+    func setBubbleView() {
+        var bubbleView: MyTopTipView
+        let viewColor: UIColor = UIColor(named: "Font-emphasis")!
+        var tipLocationX: CGFloat
+        let tipWidth: CGFloat = 14.0
+        let tipHeight: CGFloat = 7.0
+        
+        if ManageLogin.isMember {
+            
+            switch ManageLogin.kindOfLogin {
+            case "kakao":
+                tipLocationX = -(appleBtn.intrinsicContentSize.width+20)
+            case "google":
+                tipLocationX = 0.0
+            case "apple":
+                tipLocationX = appleBtn.intrinsicContentSize.width+20
+            default:
+                tipLocationX = 0.0
+            }
+            
+            bubbleView = MyTopTipView(viewColor: viewColor, tipLocationX: tipLocationX, tipWidth: tipWidth, tipHeight: tipHeight, labelText: "최근 사용한 로그인 방법이에요")
+            
+        } else {
+            tipLocationX = 0.0
+            bubbleView = MyTopTipView(viewColor: viewColor, tipLocationX: tipLocationX, tipWidth: tipWidth, tipHeight: tipHeight, labelText: "SNS 계정으로 간편하게 가입해요!")
+        }
+        
+        // bubbleView 세팅
+        view.addSubview(bubbleView)
+        
+        bubbleView.snp.makeConstraints { a in
+            a.centerX.equalToSuperview()
+            a.bottom.equalTo(appleBtn.snp.top).offset(-20)
+        }
     }
     
     // 소셜 로그인
@@ -166,7 +205,10 @@ class LoginVC: BaseController {
                     print(oauthToken)
     
                     // TODO: 서버에 acccessToken 넘기기
-                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")
+                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")  {
+                        ManageLogin.isMember = true
+                        ManageLogin.kindOfLogin = "kakao"
+                    }
                     
                 }
             }
@@ -197,7 +239,10 @@ class LoginVC: BaseController {
             print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
-            self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE")
+            self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE") {
+                ManageLogin.isMember = true
+                ManageLogin.kindOfLogin = "google"
+            }
         }
         
     }
@@ -214,7 +259,7 @@ class LoginVC: BaseController {
         controller.performRequests()
     }
     
-    func doSocialLogin(token: String, snsType: String) {
+    func doSocialLogin(token: String, snsType: String, completion: @escaping () -> Void) {
         let param: SocialLoginModel = SocialLoginModel(accessToken: token, snsType: snsType)
         AuthManager.shared.getAccessToken(token: param) { result in
             switch result {
@@ -229,11 +274,18 @@ class LoginVC: BaseController {
                 let vc = UINavigationController(rootViewController: root)
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
                 
+                completion()
+                
             case .failure(let error):
                 print("\(snsType) 소셜로그인 서버 통신 실패")
                 print("에러: \(error)")
             }
         }
+    }
+    
+    func manageLogin(kindOfLogin: String) {
+        ManageLogin.isMember = true
+        ManageLogin.kindOfLogin = kindOfLogin
     }
     
     // MARK: - Helpers
@@ -260,7 +312,10 @@ extension LoginVC: ASAuthorizationControllerDelegate {
             // idToken 저장
             UserDefaults.standard.set(tokenString, forKey: "appleIdToken")
             // TODO: 서버에 acccessToken 넘기기
-            self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE")
+            self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE") {
+                ManageLogin.isMember = true
+                ManageLogin.kindOfLogin = "apple"
+            }
         }
     }
 

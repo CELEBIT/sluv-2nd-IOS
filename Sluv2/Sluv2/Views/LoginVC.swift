@@ -157,9 +157,12 @@ class LoginVC: BaseController {
         let tipWidth: CGFloat = 14.0
         let tipHeight: CGFloat = 7.0
         
-        if ManageLogin.isMember {
+        let isMember: Bool = UserDefaults.standard.bool(forKey: "isMember")
+        
+        if isMember {
+            let kindOfLogin: String = UserDefaults.standard.string(forKey: "kindOfLogin") ?? ""
             
-            switch ManageLogin.kindOfLogin {
+            switch kindOfLogin {
             case "kakao":
                 tipLocationX = -(appleBtn.intrinsicContentSize.width+20)
             case "google":
@@ -206,8 +209,7 @@ class LoginVC: BaseController {
     
                     // TODO: 서버에 acccessToken 넘기기
                     self.doSocialLogin(token: accessToken, snsType: "KAKAO")  {
-                        ManageLogin.isMember = true
-                        ManageLogin.kindOfLogin = "kakao"
+                        self.manageLogin(kindOfLogin: "kakao")
                     }
                     
                 }
@@ -240,8 +242,7 @@ class LoginVC: BaseController {
             
             // TODO: 서버에 acccessToken 넘기기
             self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE") {
-                ManageLogin.isMember = true
-                ManageLogin.kindOfLogin = "google"
+                self.manageLogin(kindOfLogin: "google")
             }
         }
         
@@ -267,14 +268,14 @@ class LoginVC: BaseController {
                 print("\(snsType) 소셜로그인 서버 통신 성공")
                 print("발급받은 토큰: \(String(describing: result["token"]))")
                 
+                completion()
+                
                 // 토큰 발급 성공시 웹뷰로 화면전환
                 let root = WebviewVC()
                 root.token = result["token"] as! String
                 root.status = result["userStatus"] as! String
                 let vc = UINavigationController(rootViewController: root)
                 (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
-                
-                completion()
                 
             case .failure(let error):
                 print("\(snsType) 소셜로그인 서버 통신 실패")
@@ -284,8 +285,8 @@ class LoginVC: BaseController {
     }
     
     func manageLogin(kindOfLogin: String) {
-        ManageLogin.isMember = true
-        ManageLogin.kindOfLogin = kindOfLogin
+        UserDefaults.standard.setValue(true, forKey: "isMember")
+        UserDefaults.standard.setValue(kindOfLogin, forKey: "kindOfLogin")
     }
     
     // MARK: - Helpers
@@ -313,8 +314,7 @@ extension LoginVC: ASAuthorizationControllerDelegate {
             UserDefaults.standard.set(tokenString, forKey: "appleIdToken")
             // TODO: 서버에 acccessToken 넘기기
             self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE") {
-                ManageLogin.isMember = true
-                ManageLogin.kindOfLogin = "apple"
+                self.manageLogin(kindOfLogin: "apple")
             }
         }
     }

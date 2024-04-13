@@ -198,8 +198,11 @@ extension WebviewVC: WKScriptMessageHandler {
                         case "withdraw":
                             print("MessageHandelr: \(type)")
                             
-                            ManageLogin.isMember = false
-                            ManageLogin.kindOfLogin = ""
+                            UserDefaults.setValue(false, forKey: "isMember")
+                            UserDefaults.setValue("", forKey: "kindOfLogin")
+                            
+//                            ManageLogin.isMember = false
+//                            ManageLogin.kindOfLogin = ""
                             goToLoginVC()
                             break
                         default:

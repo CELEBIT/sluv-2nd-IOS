@@ -207,7 +207,7 @@ extension WebviewVC: WKScriptMessageHandler {
                         case "openLink":
                             print("링크 열어!!!!")
                             
-                            guard let linkUrl = json["linkUlr"] as? String else { return }
+                            guard let linkUrl = json["linkUrl"] as? String else { return }
                             
                             print(linkUrl)
                             openUrl(url: linkUrl)

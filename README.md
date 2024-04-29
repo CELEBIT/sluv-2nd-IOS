@@ -13,25 +13,4 @@
   >  Moya: 네트워크 통신 <br>
   >  KakaoOpenSDK : 카카오 소셜 로그인 <br>
   >  GoogleSignIn : 구글 소셜 로그인 <br>
--  그 외
-
-### 폴더 구조
-<aside>
-  
-> ├── **Sluv2**
->
-> │   ├── **App**
->
-> │   ├── **Extensions**
->
-> │   ├── **Resource**
->
-> │   │   ├── **Assets.xcassets**
->
-> │   │   └── **Fonts**
->
-> │   ├── **Util**
->
-> │   └── **Views**
-
-</aside>
+  > YPImagePicker : 이미지 <br>

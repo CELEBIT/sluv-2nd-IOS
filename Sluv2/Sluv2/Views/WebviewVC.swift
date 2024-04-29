@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import YPImagePicker
+import SafariServices
 
 class WebviewVC: BaseController{
     // MARK: - Properties
@@ -194,7 +195,6 @@ extension WebviewVC: WKScriptMessageHandler {
                             print("MessageHandelr: \(type)")
                             
                             goToLoginVC()
-                            break
                         case "withdraw":
                             print("MessageHandelr: \(type)")
                             
@@ -204,7 +204,13 @@ extension WebviewVC: WKScriptMessageHandler {
 //                            ManageLogin.isMember = false
 //                            ManageLogin.kindOfLogin = ""
                             goToLoginVC()
-                            break
+                        case "openLink":
+                            print("링크 열어!!!!")
+                            
+                            guard let linkUrl = json["linkUlr"] as? String else { return }
+                            
+                            print(linkUrl)
+                            openUrl(url: linkUrl)
                         default:
                             print("정의하지 않은 MessageHandler입니다.")
                         }
@@ -222,6 +228,11 @@ extension WebviewVC: WKScriptMessageHandler {
         let root = LoginVC()
         let vc = UINavigationController(rootViewController: root) // 네비게이션 컨트롤러 추가
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+    }
+    
+    func openUrl(url: String) {
+        let safariView: SFSafariViewController = SFSafariViewController(url: URL(string: url)!)
+        self.present(safariView, animated: true, completion: nil)
     }
 
 }

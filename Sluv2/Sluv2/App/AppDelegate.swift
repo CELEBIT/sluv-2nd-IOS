@@ -94,6 +94,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.rootViewController = UINavigationController(rootViewController: LoginVC()) // 전환
             UIView.transition(with: window, duration: 0.26, options: [.transitionCrossDissolve], animations: nil, completion: nil)
         }
+        
+        // MARK: - 자동 로그인_토큰 유효성 체크
+        
+        if let token = UserDefaults.standard.value(forKey: "token") {
+            print(token)
+            AuthManager.shared.checkTokenAccess() { result in
+                switch result {
+                case .success(let status):
+                    if status != "만료" {
+                        print("웹뷰로!")
+                        
+                        // 토큰 활성화여부 확인시 웹뷰로 화면전환
+                        let root = WebviewVC()
+                        root.token = token as! String
+                        root.status = status
+                        let vc = UINavigationController(rootViewController: root)
+                        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+                        
+                    } else {
+                        print("토큰 만료. 로그인 화면으로!22")
+                    }
+                default:
+                    print("서버 통신 실패. 로그인 화면으로!")
+                }
+            }
+            
+        } else {
+            print("저장된 토큰 없음. 로그인 화면으로!")
+        }
 
         return true
     }

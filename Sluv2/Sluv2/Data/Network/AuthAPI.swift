@@ -50,6 +50,9 @@ extension AuthAPI: TargetType {
     
     var headers: [String : String]? {
         switch self {
+        case .autoLogin:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer \(UserDefaults.standard.value(forKey: "token") as! String)"]
         default:
             return ["Content-Type" : "application/json"]
         }

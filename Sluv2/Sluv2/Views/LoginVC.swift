@@ -83,6 +83,17 @@ class LoginVC: BaseController {
         return stackView
     }()
     
+    let lookAroundBtn: UIButton = {
+        let button = UIButton()
+        
+        button.setTitleColor(UIColor(named: "Font-secondary"), for: .normal)
+        button.titleLabel?.font = .Body3
+        button.setUnderline(text: "로그인 없이 둘러보기")
+        button.addTarget(self, action: #selector(lookArd), for: .touchUpInside)
+        
+        return button
+    }()
+    
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +128,7 @@ class LoginVC: BaseController {
         view.addSubview(explainLabel1)
         view.addSubview(explainLabel2)
         view.addSubview(btnStackView)
+        view.addSubview(lookAroundBtn)
     }
     
     override func layout() {
@@ -141,9 +153,14 @@ class LoginVC: BaseController {
             a.top.equalTo(explainLabel1.snp.bottom).offset(12)
         }
         
+        lookAroundBtn.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+        }
+        
         btnStackView.snp.makeConstraints{ (a) in
             a.centerX.equalToSuperview()
-            a.bottom.equalTo(view.safeAreaLayoutGuide).offset(-60)
+            a.bottom.equalTo(lookAroundBtn.snp.top).offset(-32)
         }
         
         setBubbleView()
@@ -271,11 +288,8 @@ class LoginVC: BaseController {
                 completion((String(describing: result["token"]!)))
                 
                 // 토큰 발급 성공시 웹뷰로 화면전환
-                let root = WebviewVC()
-                root.token = result["token"] as! String
-                root.status = result["userStatus"] as! String
-                let vc = UINavigationController(rootViewController: root)
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+                let url = ServiceAPI.webURL + "/?accessToken=\(result["token"] as! String)&userStatus=\(result["userStatus"] as! String)"
+                self.goToWebView(url: url)
                 
             case .failure(let error):
                 print("\(snsType) 소셜로그인 서버 통신 실패")
@@ -284,12 +298,22 @@ class LoginVC: BaseController {
         }
     }
     
+    func goToWebView(url: String) {
+        let root = WebviewVC()
+        root.goToUrl = url
+        let vc = UINavigationController(rootViewController: root)
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
+    }
+    
     func manageLogin(kindOfLogin: String, token: String) {
         UserDefaults.standard.setValue(true, forKey: "isMember")
         UserDefaults.standard.setValue(kindOfLogin, forKey: "kindOfLogin")
         UserDefaults.standard.setValue(token, forKey: "token")
     }
     
+    @objc func lookArd() {
+        goToWebView(url: "\(ServiceAPI.webURL)/home")
+    }
     // MARK: - Helpers
     // 설정, 데이터처리 등 액션 외의 메서드를 정의
 }

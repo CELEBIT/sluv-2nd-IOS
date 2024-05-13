@@ -15,10 +15,9 @@ class WebviewVC: BaseController{
     // 변수 및 상수, IBOutlet
 
     var webView: WKWebView!
-    var token: String = ""
-    var status: String = ""
 //    var selectedImage: [YPMediaItem] = []
     var base64Image: [String] = []
+    var goToUrl: String = "\(ServiceAPI.webURL)/home"
     
     // MARK: - Lifecycle
     // 생명주기와 관련된 메서드 (viewDidLoad, viewDidDisappear...)
@@ -29,8 +28,7 @@ class WebviewVC: BaseController{
         navigationController?.navigationBar.isHidden = true
         
         // WebView 불러오기
-        let myURL = ServiceAPI.webURL
-        let myRequest = URLRequest(url: URL(string: myURL + "/?accessToken=\(token)&userStatus=\(status)")!)
+        let myRequest = URLRequest(url: URL(string: goToUrl)!)
         webView.load(myRequest)
         
     }
@@ -211,6 +209,9 @@ extension WebviewVC: WKScriptMessageHandler {
                             
                             print(linkUrl)
                             openUrl(url: linkUrl)
+                        case "needLogin":
+                            goToLoginVC()
+                            
                         default:
                             print("정의하지 않은 MessageHandler입니다.")
                         }

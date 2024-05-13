@@ -106,9 +106,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         print("웹뷰로!")
                         
                         // 토큰 활성화여부 확인시 웹뷰로 화면전환
+                        let url = ServiceAPI.webURL + "/?accessToken=\(token as! String)&userStatus=\(status)"
                         let root = WebviewVC()
-                        root.token = token as! String
-                        root.status = status
+                        root.goToUrl = url
                         let vc = UINavigationController(rootViewController: root)
                         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
                         

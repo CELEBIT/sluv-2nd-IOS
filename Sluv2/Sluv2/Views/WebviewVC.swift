@@ -192,8 +192,6 @@ extension WebviewVC: WKScriptMessageHandler {
                         case "logout":
                             print("MessageHandelr: \(type)")
                             
-                            UserDefaults.standard.removeObject(forKey: "token")
-                            
                             goToLoginVC()
                         case "withdraw":
                             print("MessageHandelr: \(type)")
@@ -206,15 +204,16 @@ extension WebviewVC: WKScriptMessageHandler {
 //                            ManageLogin.kindOfLogin = ""
                             goToLoginVC()
                         case "openLink":
-                            print("링크 열어!!!!")
+                            print("MessageHandelr: \(type)")
                             
                             guard let linkUrl = json["linkUrl"] as? String else { return }
                             
                             print(linkUrl)
                             openUrl(url: linkUrl)
                         case "needLogin":
-                            goToLoginVC()
+                            print("MessageHandelr: \(type)")
                             
+                            goToLoginVC()
                         default:
                             print("정의하지 않은 MessageHandler입니다.")
                         }

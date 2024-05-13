@@ -192,6 +192,8 @@ extension WebviewVC: WKScriptMessageHandler {
                         case "logout":
                             print("MessageHandelr: \(type)")
                             
+                            UserDefaults.standard.removeObject(forKey: "token")
+                            
                             goToLoginVC()
                         case "withdraw":
                             print("MessageHandelr: \(type)")

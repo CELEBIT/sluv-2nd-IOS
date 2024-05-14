@@ -212,6 +212,7 @@ class LoginVC: BaseController {
         
         // 카카오톡 실행 가능 여부 확인
         if (UserApi.isKakaoTalkLoginAvailable()) {
+            // Kakao app is existing
             UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                 if let error = error {
                     print(error)
@@ -221,14 +222,30 @@ class LoginVC: BaseController {
                     print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
                     
                     let accessToken: String = oauthToken!.accessToken as String
-                    
-                    print(oauthToken)
     
                     // TODO: 서버에 acccessToken 넘기기
                     self.doSocialLogin(token: accessToken, snsType: "KAKAO")  { token in
                         self.manageLogin(kindOfLogin: "kakao", token: token)
                     }
                     
+                }
+            }
+        } else {
+            // Kakao app isn't existing
+            UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoAccount() success.\n")
+                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
+
+                    let accessToken: String = oauthToken!.accessToken as String
+    
+                    // TODO: 서버에 acccessToken 넘기기
+                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")  { token in
+                        self.manageLogin(kindOfLogin: "kakao", token: token)
+                    }
                 }
             }
         }

@@ -25,6 +25,7 @@
 		091B2F832B6FF5B40050290C /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091B2F792B6FF5B40050290C /* Pretendard-Bold.otf */; };
 		091B2F842B6FF5B40050290C /* Pretendard-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091B2F7A2B6FF5B40050290C /* Pretendard-ExtraLight.otf */; };
 		091B2F852B6FF5B40050290C /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 091B2F7B2B6FF5B40050290C /* Pretendard-Regular.otf */; };
+		093DD3472C5EA37500D78661 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 093DD3462C5EA37500D78661 /* GoogleService-Info.plist */; };
 		095341642B6FFF4E008F7410 /* setFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095341632B6FFF4E008F7410 /* setFonts.swift */; };
 		095A624D2BC38A83000240BE /* ManageLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A624C2BC38A83000240BE /* ManageLogin.swift */; };
 		095A624F2BC391E6000240BE /* TipLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A624E2BC391E6000240BE /* TipLabel.swift */; };
@@ -34,6 +35,8 @@
 		097524CB2B89D7630038C711 /* images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097524CA2B89D7630038C711 /* images.swift */; };
 		099B10252B725BB8007073F5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 099B10242B725BB8007073F5 /* GoogleSignIn */; };
 		099B10272B725BB8007073F5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 099B10262B725BB8007073F5 /* GoogleSignInSwift */; };
+		09B8FB3F2C47CA6400013F1E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 09B8FB3E2C47CA6400013F1E /* FirebaseAnalytics */; };
+		09B8FB412C47CA6400013F1E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 09B8FB402C47CA6400013F1E /* FirebaseMessaging */; };
 		09C1646D2B73CA110059EB94 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C1646C2B73CA110059EB94 /* AuthAPI.swift */; };
 		09C164702B73CAD40059EB94 /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C1646F2B73CAD40059EB94 /* CombineMoya */; };
 		09C164722B73CAD40059EB94 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 09C164712B73CAD40059EB94 /* Moya */; };
@@ -73,6 +76,7 @@
 		091B2F7B2B6FF5B40050290C /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		091ED2922B84F5090022DB48 /* Sluv2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sluv2.entitlements; sourceTree = "<group>"; };
 		0938D5BF2BDF5BD100EB6FFB /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		093DD3462C5EA37500D78661 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		095341632B6FFF4E008F7410 /* setFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setFonts.swift; sourceTree = "<group>"; };
 		095A624C2BC38A83000240BE /* ManageLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageLogin.swift; sourceTree = "<group>"; };
 		095A624E2BC391E6000240BE /* TipLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipLabel.swift; sourceTree = "<group>"; };
@@ -95,12 +99,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09B8FB412C47CA6400013F1E /* FirebaseMessaging in Frameworks */,
 				099B10272B725BB8007073F5 /* GoogleSignInSwift in Frameworks */,
 				097524C72B89CA990038C711 /* YPImagePicker in Frameworks */,
 				09C3EFB92B709BE9002E2798 /* SnapKit in Frameworks */,
 				09C164702B73CAD40059EB94 /* CombineMoya in Frameworks */,
 				099B10252B725BB8007073F5 /* GoogleSignIn in Frameworks */,
 				09C3EFC42B71361B002E2798 /* IQKeyboardManagerSwift in Frameworks */,
+				09B8FB3F2C47CA6400013F1E /* FirebaseAnalytics in Frameworks */,
 				09C164742B73CAD40059EB94 /* ReactiveMoya in Frameworks */,
 				09C164762B73CAD40059EB94 /* RxMoya in Frameworks */,
 				09C164722B73CAD40059EB94 /* Moya in Frameworks */,
@@ -138,6 +144,7 @@
 				091B2F692B6FF2800050290C /* Views */,
 				091B2F682B6FF26E0050290C /* App */,
 				091B2F622B6FF2490050290C /* Info.plist */,
+				093DD3462C5EA37500D78661 /* GoogleService-Info.plist */,
 				091B2F5A2B6FF2480050290C /* Sluv2.xcdatamodeld */,
 			);
 			path = Sluv2;
@@ -267,6 +274,8 @@
 				09C164732B73CAD40059EB94 /* ReactiveMoya */,
 				09C164752B73CAD40059EB94 /* RxMoya */,
 				097524C62B89CA990038C711 /* YPImagePicker */,
+				09B8FB3E2C47CA6400013F1E /* FirebaseAnalytics */,
+				09B8FB402C47CA6400013F1E /* FirebaseMessaging */,
 			);
 			productName = Sluv2;
 			productReference = 091B2F4E2B6FF2480050290C /* Sluv2.app */;
@@ -304,6 +313,7 @@
 				099B10232B725BB8007073F5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */,
 				097524C52B89CA990038C711 /* XCRemoteSwiftPackageReference "YPImagePicker" */,
+				09B8FB3D2C47CA6400013F1E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 091B2F4F2B6FF2480050290C /* Products */;
 			projectDirPath = "";
@@ -319,6 +329,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				093DD3472C5EA37500D78661 /* GoogleService-Info.plist in Resources */,
 				091B2F612B6FF2490050290C /* LaunchScreen.storyboard in Resources */,
 				091B2F852B6FF5B40050290C /* Pretendard-Regular.otf in Resources */,
 				091B2F832B6FF5B40050290C /* Pretendard-Bold.otf in Resources */,
@@ -430,7 +441,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -485,7 +496,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -617,6 +628,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		09B8FB3D2C47CA6400013F1E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.29.0;
+			};
+		};
 		09C1646E2B73CAD40059EB94 /* XCRemoteSwiftPackageReference "Moya" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Moya/Moya.git";
@@ -663,6 +682,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 099B10232B725BB8007073F5 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		09B8FB3E2C47CA6400013F1E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09B8FB3D2C47CA6400013F1E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		09B8FB402C47CA6400013F1E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 09B8FB3D2C47CA6400013F1E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		09C1646F2B73CAD40059EB94 /* CombineMoya */ = {
 			isa = XCSwiftPackageProductDependency;

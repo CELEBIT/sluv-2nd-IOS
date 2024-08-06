@@ -111,6 +111,13 @@ extension WebviewVC: WKNavigationDelegate {
 //        setToken(token: token, userStatus: status)
     }
     
+    // 웹 페이지 초기 로딩이 실패 시 호출됨
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let alert = UIAlertController(title: nil, message: "서버 점검중입니다. 빠른 시일 내에 완료하겠습니다.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
         let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
         

@@ -233,9 +233,11 @@ extension AppDelegate: MessagingDelegate {
     
     // 파이어베이스 MessagingDelegate 설정
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      print("Firebase registration token: \(String(describing: fcmToken))")
+        print("Firebase registration token: \(String(describing: fcmToken))")
         
-      // TODO: If necessary send token to application server.
+        // fcm 토큰 UserDefaults에 저장
+        let stringFcmToken: String = String(describing: fcmToken)
+        UserDefaults.standard.set(stringFcmToken, forKey: "fcmToken")
       
     }
 }

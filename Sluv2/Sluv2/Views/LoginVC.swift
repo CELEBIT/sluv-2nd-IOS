@@ -224,7 +224,8 @@ class LoginVC: BaseController {
                     let accessToken: String = oauthToken!.accessToken as String
     
                     // TODO: 서버에 acccessToken 넘기기
-                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")  { token in
+                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+                    self.doSocialLogin(token: accessToken, snsType: "KAKAO", fcm: fcmToken)  { token in
                         self.manageLogin(kindOfLogin: "kakao", token: token)
                     }
                     
@@ -243,7 +244,8 @@ class LoginVC: BaseController {
                     let accessToken: String = oauthToken!.accessToken as String
     
                     // TODO: 서버에 acccessToken 넘기기
-                    self.doSocialLogin(token: accessToken, snsType: "KAKAO")  { token in
+                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+                    self.doSocialLogin(token: accessToken, snsType: "KAKAO", fcm: fcmToken)  { token in
                         self.manageLogin(kindOfLogin: "kakao", token: token)
                     }
                 }
@@ -275,7 +277,8 @@ class LoginVC: BaseController {
             print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
-            self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE") { token in
+            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+            self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE", fcm: fcmToken) { token in
                 self.manageLogin(kindOfLogin: "google", token: token)
             }
         }
@@ -294,8 +297,8 @@ class LoginVC: BaseController {
         controller.performRequests()
     }
     
-    func doSocialLogin(token: String, snsType: String, completion: @escaping (String) -> Void) {
-        let param: SocialLoginModel = SocialLoginModel(accessToken: token, snsType: snsType)
+    func doSocialLogin(token: String, snsType: String, fcm: String, completion: @escaping (String) -> Void) {
+        let param: SocialLoginModel = SocialLoginModel(accessToken: token, snsType: snsType, fcm: fcm)
         AuthManager.shared.getAccessToken(token: param) { result in
             switch result {
             case .success(let result):
@@ -355,7 +358,8 @@ extension LoginVC: ASAuthorizationControllerDelegate {
             // idToken 저장
             UserDefaults.standard.set(tokenString, forKey: "appleIdToken")
             // TODO: 서버에 acccessToken 넘기기
-            self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE") { token in
+            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+            self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE", fcm: fcmToken) { token in
                 self.manageLogin(kindOfLogin: "apple", token: token)
             }
         }

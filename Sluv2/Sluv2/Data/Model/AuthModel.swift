@@ -12,4 +12,6 @@ import Foundation
 struct SocialLoginModel: Codable {
     let accessToken: String
     let snsType: String
+    let fcm: String
+
 }

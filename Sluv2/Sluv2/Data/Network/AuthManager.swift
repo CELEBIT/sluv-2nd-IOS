@@ -58,5 +58,23 @@ class AuthManager {
         }
     }
     
+    // 토큰 갱신
+    func updateFcm(fcm: fcmModel, completion: @escaping (Result<String, Error>) -> Void ) {
+        provider.request(.fcm(param: fcm)) { result in
+            switch result {
+            case .success(let result):
+                if let json = try? JSONSerialization.jsonObject(with: result.data, options: []) as? [String : Any] {
+                    if json["isSuccess"] as? Bool == true {
+                        completion(.success("토큰 갱신 성공"))
+                    } else {
+                        completion(.success("토큰 갱신 실패"))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(MyError.communicationFailureError(error)))
+            }
+        }
+    }
+    
     
 }

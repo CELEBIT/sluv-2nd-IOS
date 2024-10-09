@@ -98,14 +98,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIView.transition(with: window, duration: 0.26, options: [.transitionCrossDissolve], animations: nil, completion: nil)
         }
         
+        // MARK: - Firebase 설정
+        FirebaseApp.configure()
+        
+        // 앱 실행 시 사용자에게 알림 허용 권한을 받음
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound] // 필요한 알림 권한을 설정
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
+        
+        // UNUserNotificationCenterDelegate를 구현한 메서드를 실행시킴
+        application.registerForRemoteNotifications()
+        
+        // 파이어베이스 Meesaging 설정
+        Messaging.messaging().delegate = self
+        
         // MARK: - 자동 로그인_토큰 유효성 체크
         
         if let token = UserDefaults.standard.value(forKey: "token") {
-            print(token)
             AuthManager.shared.checkTokenAccess() { result in
                 switch result {
                 case .success(let status):
                     if status != "만료" {
+                        
                         print("웹뷰로!")
                         
                         // 토큰 활성화여부 확인시 웹뷰로 화면전환
@@ -126,21 +141,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("저장된 토큰 없음. 로그인 화면으로!")
         }
-        
-        // MARK: - Firebase 설정
-        FirebaseApp.configure()
-        
-        // 앱 실행 시 사용자에게 알림 허용 권한을 받음
-        UNUserNotificationCenter.current().delegate = self
-        
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound] // 필요한 알림 권한을 설정
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { _, _ in })
-        
-        // UNUserNotificationCenterDelegate를 구현한 메서드를 실행시킴
-        application.registerForRemoteNotifications()
-        
-        // 파이어베이스 Meesaging 설정
-        Messaging.messaging().delegate = self
 
         return true
     }
@@ -230,12 +230,53 @@ extension AppDelegate: MessagingDelegate {
     
     // 파이어베이스 MessagingDelegate 설정
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
+        // 발급받은 fcm 토큰 unwrapping 및 String 형으로 변환
+        guard let optionalNowFcmToken = fcmToken else { return }
+        let nowFcmToken: String = String(describing: optionalNowFcmToken)
         
-        // fcm 토큰 UserDefaults에 저장
-        let stringFcmToken: String = String(describing: fcmToken)
-        UserDefaults.standard.set(stringFcmToken, forKey: "fcmToken")
+        // 이전에 저장된 fcm이 있는지 & fcm 토큰이 변화하였는지 체크
+        if let prevfcm = UserDefaults.standard.string(forKey: "fcmToken") {
+            // 토큰 있을 때 수행할 동작 : 기존의 토큰과 비교 후 다르면 저장 및 서버로 전송
+            if prevfcm != nowFcmToken {
+                setFcmToken(recentFcm: nowFcmToken)
+            } else {
+                // 수행할 작업 없음
+            }
+        } else {
+            // 토큰 없을 때 수행할 동작 : 토큰 저장 및 서버로 전송
+            setFcmToken(recentFcm: nowFcmToken)
+        }
       
+    }
+    
+    func setFcmToken(recentFcm: String) {
+        if let token = UserDefaults.standard.value(forKey: "token") {
+            AuthManager.shared.checkTokenAccess() { result in
+                switch result {
+                case .success(let status):
+                    if status != "만료" {
+                        // fcm 토큰 서버에 저장
+                        AuthManager.shared.updateFcm(fcm: fcmModel(fcm: recentFcm)) { result in
+                            switch result {
+                            case .success(let resultMessage):
+                                print("fcm 토큰 업데이트 서버 통신 성공 : \(resultMessage)")
+                                // fcm 토큰 UserDefaults에 저장
+                                UserDefaults.standard.set(recentFcm, forKey: "fcmToken")
+                            case .failure(let error):
+                                print("fcm 토큰 업데이트 서버 통신 실패 : \(error)")
+                            }
+                        }
+                    } else {
+                        print("토큰 만료. fcm 토큰 업데이트 실패.")
+                    }
+                default:
+                    print("서버 통신 실패. fcm 토큰 업데이트 실패.")
+                }
+            }
+        } else {
+            print("저장된 토큰 없음. fcm 토큰 업데이트 실패.")
+        }
+        
     }
 }
 

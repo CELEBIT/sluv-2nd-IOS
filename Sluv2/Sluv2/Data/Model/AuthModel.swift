@@ -15,3 +15,8 @@ struct SocialLoginModel: Codable {
     let fcm: String
 
 }
+
+// MARK: - autoLogin, updateFcm
+struct fcmModel : Codable {
+    let fcm : String
+}

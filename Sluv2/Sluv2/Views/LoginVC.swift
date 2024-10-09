@@ -219,12 +219,12 @@ class LoginVC: BaseController {
                 }
                 else {
                     print("[Kakao] loginWithKakaoTalk() success.\n")
-                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
+//                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
                     
                     let accessToken: String = oauthToken!.accessToken as String
     
                     // TODO: 서버에 acccessToken 넘기기
-                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
                     self.doSocialLogin(token: accessToken, snsType: "KAKAO", fcm: fcmToken)  { token in
                         self.manageLogin(kindOfLogin: "kakao", token: token)
                     }
@@ -239,12 +239,12 @@ class LoginVC: BaseController {
                 }
                 else {
                     print("loginWithKakaoAccount() success.\n")
-                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
+//                    print("* 카카오 aceessToken: ", oauthToken!.accessToken as String)
 
                     let accessToken: String = oauthToken!.accessToken as String
     
                     // TODO: 서버에 acccessToken 넘기기
-                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+                    let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
                     self.doSocialLogin(token: accessToken, snsType: "KAKAO", fcm: fcmToken)  { token in
                         self.manageLogin(kindOfLogin: "kakao", token: token)
                     }
@@ -271,13 +271,13 @@ class LoginVC: BaseController {
             let clientID      = (signInResult.user.userID ?? "") as String
             
             print("[Google] signIn() success.\n")
-            print("* 구글 aceessToken: ", accessToken)
-            print("* 구글 idToken: ", idToken ?? "idToken이 비었습니다.")
-            print("* 구글 clientID: ", clientID)
-            print("* 구글 refreshToken: ", refreshToken)
+//            print("* 구글 aceessToken: ", accessToken)
+//            print("* 구글 idToken: ", idToken ?? "idToken이 비었습니다.")
+//            print("* 구글 clientID: ", clientID)
+//            print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
-            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
             self.doSocialLogin(token: idToken ?? "idToken이 비었습니다.", snsType: "GOOGLE", fcm: fcmToken) { token in
                 self.manageLogin(kindOfLogin: "google", token: token)
             }
@@ -346,19 +346,19 @@ extension LoginVC: ASAuthorizationControllerDelegate {
 
             let idToken = credential.identityToken!
             let tokenString = String(data: idToken, encoding: .utf8)
-            print("idToken: ", tokenString ?? "비었음")
+//            print("idToken: ", tokenString ?? "비었음")
 
             guard let code = credential.authorizationCode else { return }
             let codeString = String(data: code, encoding: .utf8)
-            print("codeString: ", codeString ?? "비었음")
+//            print("codeString: ", codeString ?? "비었음")
 
             let user = credential.user
-            print("user: ", user)
+//            print("user: ", user)
             
             // idToken 저장
             UserDefaults.standard.set(tokenString, forKey: "appleIdToken")
             // TODO: 서버에 acccessToken 넘기기
-            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken")!
+            let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
             self.doSocialLogin(token: tokenString ?? "idToken이 비었습니다.", snsType: "APPLE", fcm: fcmToken) { token in
                 self.manageLogin(kindOfLogin: "apple", token: token)
             }

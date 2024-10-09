@@ -11,6 +11,7 @@ import Moya
 enum AuthAPI {
     case socialLogin(param: SocialLoginModel)
     case autoLogin
+    case fcm(param : fcmModel)
 }
 
 extension AuthAPI: TargetType {
@@ -27,6 +28,8 @@ extension AuthAPI: TargetType {
             return "/app/auth/social-login"
         case .autoLogin:
             return "/app/auth/auto-login"
+        case .fcm:
+            return "app/auth/fcm"
         }
     }
     
@@ -36,6 +39,8 @@ extension AuthAPI: TargetType {
             return .post
         case .autoLogin:
             return .get
+        case .fcm:
+            return .post
         }
     }
     
@@ -45,12 +50,14 @@ extension AuthAPI: TargetType {
             return .requestJSONEncodable(param)
         case .autoLogin:
             return .requestPlain
+        case .fcm(let param):
+            return .requestJSONEncodable(param)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .autoLogin:
+        case .autoLogin, .fcm:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer \(UserDefaults.standard.value(forKey: "token") as! String)"]
         default:

@@ -116,7 +116,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // MARK: - 자동 로그인_토큰 유효성 체크
         
         if let token = UserDefaults.standard.value(forKey: "token") {
-            AuthManager.shared.checkTokenAccess() { result in
+            let tempFcm = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
+            print("temp fcm !!!! \(tempFcm)")
+            AuthManager.shared.checkTokenAccess(fcm: fcmModel(fcm: tempFcm)) { result in
                 switch result {
                 case .success(let status):
                     if status != "만료" {
@@ -233,9 +235,11 @@ extension AppDelegate: MessagingDelegate {
         // 발급받은 fcm 토큰 unwrapping 및 String 형으로 변환
         guard let optionalNowFcmToken = fcmToken else { return }
         let nowFcmToken: String = String(describing: optionalNowFcmToken)
+        print("now fcm !!!! \(nowFcmToken)")
         
         // 이전에 저장된 fcm이 있는지 & fcm 토큰이 변화하였는지 체크
         if let prevfcm = UserDefaults.standard.string(forKey: "fcmToken") {
+            print("prev fcm !!!! \(prevfcm)")
             // 토큰 있을 때 수행할 동작 : 기존의 토큰과 비교 후 다르면 저장 및 서버로 전송
             if prevfcm != nowFcmToken {
                 setFcmToken(recentFcm: nowFcmToken)
@@ -251,7 +255,9 @@ extension AppDelegate: MessagingDelegate {
     
     func setFcmToken(recentFcm: String) {
         if let token = UserDefaults.standard.value(forKey: "token") {
-            AuthManager.shared.checkTokenAccess() { result in
+            let tempFcm = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
+            print("temp fcm !!!! \(tempFcm)")
+            AuthManager.shared.checkTokenAccess(fcm: fcmModel(fcm: tempFcm)) { result in
                 switch result {
                 case .success(let status):
                     if status != "만료" {

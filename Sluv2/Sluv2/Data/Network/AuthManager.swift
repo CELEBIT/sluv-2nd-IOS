@@ -39,8 +39,8 @@ class AuthManager {
     }
     
     // 토큰 유효성 체크
-    func checkTokenAccess(completion: @escaping (Result<String, Error>) -> Void ) {
-        provider.request(.autoLogin) { result in
+    func checkTokenAccess(fcm: fcmModel, completion: @escaping (Result<String, Error>) -> Void ) {
+        provider.request(.autoLogin(param: fcm)) { result in
             switch result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data.data, options: []) as? [String : Any] {

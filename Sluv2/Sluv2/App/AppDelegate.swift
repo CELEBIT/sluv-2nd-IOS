@@ -115,35 +115,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // MARK: - 자동 로그인_토큰 유효성 체크
         
-        if let token = UserDefaults.standard.value(forKey: "token") {
-            let tempFcm = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
-            print("temp fcm !!!! \(tempFcm)")
-            AuthManager.shared.checkTokenAccess(fcm: fcmModel(fcm: tempFcm)) { result in
-                switch result {
-                case .success(let status):
-                    if status != "만료" {
-                        
-                        print("웹뷰로!")
-                        
-                        // 토큰 활성화여부 확인시 웹뷰로 화면전환
-                        let url = ServiceAPI.webURL + "/?accessToken=\(token as! String)&userStatus=\(status)"
-                        let root = WebviewVC()
-                        root.goToUrl = url
-                        let vc = UINavigationController(rootViewController: root)
-                        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
-                        
-                    } else {
-                        print("토큰 만료. 로그인 화면으로!22")
-                    }
-                default:
-                    print("서버 통신 실패. 로그인 화면으로!")
-                }
-            }
+        Functions.checkJWTToken { token, status in
+            print("토큰 유효. 웹뷰로 이동")
             
-        } else {
-            print("저장된 토큰 없음. 로그인 화면으로!")
+            // 토큰 활성화여부 확인시 웹뷰로 화면전환
+            let url = ServiceAPI.webURL + "/?accessToken=\(token)&userStatus=\(status)"
+            Functions.goToWebView(url: url)
         }
-
+        
         return true
     }
 
@@ -205,7 +184,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    // MARK: - check notification status
+    
 }
 
 // MARK: - Push Notification
@@ -235,11 +216,9 @@ extension AppDelegate: MessagingDelegate {
         // 발급받은 fcm 토큰 unwrapping 및 String 형으로 변환
         guard let optionalNowFcmToken = fcmToken else { return }
         let nowFcmToken: String = String(describing: optionalNowFcmToken)
-        print("now fcm !!!! \(nowFcmToken)")
         
         // 이전에 저장된 fcm이 있는지 & fcm 토큰이 변화하였는지 체크
         if let prevfcm = UserDefaults.standard.string(forKey: "fcmToken") {
-            print("prev fcm !!!! \(prevfcm)")
             // 토큰 있을 때 수행할 동작 : 기존의 토큰과 비교 후 다르면 저장 및 서버로 전송
             if prevfcm != nowFcmToken {
                 setFcmToken(recentFcm: nowFcmToken)
@@ -254,7 +233,7 @@ extension AppDelegate: MessagingDelegate {
     }
     
     func setFcmToken(recentFcm: String) {
-        if let token = UserDefaults.standard.value(forKey: "token") {
+        if UserDefaults.standard.value(forKey: "token") != nil {
             let tempFcm = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
             print("temp fcm !!!! \(tempFcm)")
             AuthManager.shared.checkTokenAccess(fcm: fcmModel(fcm: tempFcm)) { result in
@@ -284,5 +263,104 @@ extension AppDelegate: MessagingDelegate {
         }
         
     }
+    
+    // 알람 목적지 url 획득
+    func getDestination(aps: [String:Any]) -> String {
+        switch aps["type"] as! String {
+        case "item":
+            if let itemId: String = aps["itemId"] as? String {
+                return "/item/detail/\(itemId)"
+            } else {
+                return "/home"
+            }
+        case "question":
+                //
+            if let questionId: String = aps["questionId"] as? String {
+                return "/community/detail/\(questionId)"
+            } else {
+                return "/home"
+            }
+        case "user":
+            if let userId: String = aps["userId"] as? String {
+                return "/user/\(userId)"
+            } else {
+                return "/home"
+            }
+        case "notice":
+            if let noticeId: String = aps["noticeId"] as? String {
+                return "/notice/\(noticeId)"
+            } else {
+                return "/home"
+            }
+        case "comment":
+            if let questionId: String = aps["questionId"] as? String,
+               let _: String = aps["commentId"] as? String {
+                return "/community/detail/\(questionId)"
+            } else {
+                return "/home"
+            }
+        case "report":
+            if let reportId: String = aps["reportId"] as? String {
+                return "/home"
+                // 페이지 생성되면 url 수정
+//                return "/item/detail/\(reportId)"
+            } else {
+                return "/home"
+            }
+        case "edit":
+            if let itemEditId: String = aps["itemEditId"] as? String {
+                return "/home"
+                // 페이지 생성되면 url 수정
+//                return "/item/edit/\(itemEditId)"
+            } else {
+                return "/home"
+            }
+        case "vote":
+            if let questionId: String = aps["questionId"] as? String {
+                return "/community/detail/\(questionId)"
+            } else {
+                return "/home"
+            }
+        case "thanks":
+            if let itemEditId: String = aps["itemEditId"] as? String {
+                return "/home"
+                // 페이지 생성되면 url 수정
+//                return "/item/edit/\(itemEditId)"
+            } else {
+                return "/home"
+            }
+        default:
+            return ""
+        }
+    }
+    
+    // 알람 타입별 동작 처리
+    func handleNotification(aps: [String:Any]) {
+        
+        Functions.checkJWTToken { token, status in
+            let destinationUrl: String = ServiceAPI.webURL + self.getDestination(aps: aps)
+            Functions.goToWebView(url: destinationUrl)
+        } failureCompletion: {
+            Functions.goToLoginVC(redirectionPath: self.getDestination(aps: aps))
+        }
+
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        if let aps = response.notification.request.content.userInfo as? [String:Any] {
+            print(aps)
+            
+            // 알림 타입에 따라 처리
+            handleNotification(aps: aps)
+        } else {
+            print("Alert 정보를 추출할 수 없습니다.")
+        }
+
+        completionHandler()
+        
+    }
+    
+
 }
 

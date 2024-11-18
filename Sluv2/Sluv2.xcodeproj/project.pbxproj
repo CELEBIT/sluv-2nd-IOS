@@ -52,6 +52,7 @@
 		09C3EFBF2B70FF77002E2798 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFBE2B70FF77002E2798 /* CustomButton.swift */; };
 		09C3EFC12B711EDB002E2798 /* RegisterProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */; };
 		09C3EFC42B71361B002E2798 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 09C3EFC32B71361B002E2798 /* IQKeyboardManagerSwift */; };
+		09D150D02CEAEC4200FFCB15 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D150CF2CEAEC4200FFCB15 /* Functions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		09C3EFBC2B70B57F002E2798 /* DefaultVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultVC.swift; sourceTree = "<group>"; };
 		09C3EFBE2B70FF77002E2798 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		09C3EFC02B711EDB002E2798 /* RegisterProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterProfileVC.swift; sourceTree = "<group>"; };
+		09D150CF2CEAEC4200FFCB15 /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 			children = (
 				09C1646B2B73C9DF0059EB94 /* Model */,
 				09C1646A2B73C9D70059EB94 /* Network */,
+				09D150CF2CEAEC4200FFCB15 /* Functions.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				09C1647C2B83B2280059EB94 /* WebviewVC.swift in Sources */,
 				095A624F2BC391E6000240BE /* TipLabel.swift in Sources */,
 				091B2F702B6FF3CC0050290C /* BaseController.swift in Sources */,
+				09D150D02CEAEC4200FFCB15 /* Functions.swift in Sources */,
 				097524C92B89CAA80038C711 /* ImagePicker.swift in Sources */,
 				091B2F6B2B6FF34B0050290C /* LoginVC.swift in Sources */,
 				091B2F542B6FF2480050290C /* SceneDelegate.swift in Sources */,

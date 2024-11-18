@@ -179,8 +179,6 @@ extension WebviewVC: WKNavigationDelegate {
 extension WebviewVC: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "IOSBridge", let jsonString = message.body as? String {
-            print("아아아아아")
-            print(message.body)
             
             // Parse JSON
             if let data = jsonString.data(using: .utf8) {
@@ -201,7 +199,7 @@ extension WebviewVC: WKScriptMessageHandler {
                             
                             UserDefaults.standard.removeObject(forKey: "token")
                             
-                            goToLoginVC()
+                            Functions.goToLoginVC()
                         case "withdraw":
                             print("MessageHandelr: \(type)")
                             
@@ -211,18 +209,17 @@ extension WebviewVC: WKScriptMessageHandler {
                             
 //                            ManageLogin.isMember = false
 //                            ManageLogin.kindOfLogin = ""
-                            goToLoginVC()
+                            Functions.goToLoginVC()
                         case "openLink":
                             print("MessageHandelr: \(type)")
                             
                             guard let linkUrl = json["linkUrl"] as? String else { return }
                             
-                            print(linkUrl)
                             openUrl(url: linkUrl)
                         case "needLogin":
                             print("MessageHandelr: \(type)")
                             
-                            goToLoginVC()
+                            Functions.backToLoginVC(from: self)
                         default:
                             print("정의하지 않은 MessageHandler입니다.")
                         }
@@ -234,12 +231,6 @@ extension WebviewVC: WKScriptMessageHandler {
             }
         }
         
-    }
-    
-    func goToLoginVC() {
-        let root = LoginVC()
-        let vc = UINavigationController(rootViewController: root) // 네비게이션 컨트롤러 추가
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
     }
     
     func openUrl(url: String) {

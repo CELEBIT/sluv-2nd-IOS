@@ -16,6 +16,9 @@ class LoginVC: BaseController {
     // MARK: - Properties
     // 변수 및 상수, IBOutlet
     
+    // for push notification redirection
+    var redirectionPath: String = ""
+    
     // MARK: [For UI Components]
     let sluvLogo: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "Sluv_logo"))
@@ -89,7 +92,7 @@ class LoginVC: BaseController {
         button.setTitleColor(UIColor(named: "Font-secondary"), for: .normal)
         button.titleLabel?.font = .Body3
         button.setUnderline(text: "로그인 없이 둘러보기")
-        button.addTarget(self, action: #selector(lookArd), for: .touchUpInside)
+        button.addTarget(LoginVC.self, action: #selector(lookArd), for: .touchUpInside)
         
         return button
     }()
@@ -266,15 +269,11 @@ class LoginVC: BaseController {
             _ = signInResult.user.profile?.name
             
             let idToken       = signInResult.user.idToken?.tokenString as? String
-            let accessToken   = signInResult.user.accessToken.tokenString
-            let refreshToken  = signInResult.user.refreshToken.tokenString
-            let clientID      = (signInResult.user.userID ?? "") as String
+            _   = signInResult.user.accessToken.tokenString
+            _  = signInResult.user.refreshToken.tokenString
+            _      = (signInResult.user.userID ?? "") as String
             
             print("[Google] signIn() success.\n")
-//            print("* 구글 aceessToken: ", accessToken)
-//            print("* 구글 idToken: ", idToken ?? "idToken이 비었습니다.")
-//            print("* 구글 clientID: ", clientID)
-//            print("* 구글 refreshToken: ", refreshToken)
             
             // TODO: 서버에 acccessToken 넘기기
             let fcmToken: String = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
@@ -309,20 +308,13 @@ class LoginVC: BaseController {
                 
                 // 토큰 발급 성공시 웹뷰로 화면전환
                 let url = ServiceAPI.webURL + "/?accessToken=\(result["token"] as! String)&userStatus=\(result["userStatus"] as! String)"
-                self.goToWebView(url: url)
+                Functions.goToWebView(url: url)
                 
             case .failure(let error):
                 print("\(snsType) 소셜로그인 서버 통신 실패")
                 print("에러: \(error)")
             }
         }
-    }
-    
-    func goToWebView(url: String) {
-        let root = WebviewVC()
-        root.goToUrl = url
-        let vc = UINavigationController(rootViewController: root)
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
     }
     
     func manageLogin(kindOfLogin: String, token: String) {
@@ -332,7 +324,7 @@ class LoginVC: BaseController {
     }
     
     @objc func lookArd() {
-        goToWebView(url: "\(ServiceAPI.webURL)/home")
+        Functions.goToLookArdView(from: self, url: "\(ServiceAPI.webURL)/home")
     }
     // MARK: - Helpers
     // 설정, 데이터처리 등 액션 외의 메서드를 정의
@@ -349,10 +341,10 @@ extension LoginVC: ASAuthorizationControllerDelegate {
 //            print("idToken: ", tokenString ?? "비었음")
 
             guard let code = credential.authorizationCode else { return }
-            let codeString = String(data: code, encoding: .utf8)
+//            let codeString = String(data: code, encoding: .utf8)
 //            print("codeString: ", codeString ?? "비었음")
 
-            let user = credential.user
+//            let user = credential.user
 //            print("user: ", user)
             
             // idToken 저장

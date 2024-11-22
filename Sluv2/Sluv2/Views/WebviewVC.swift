@@ -49,6 +49,11 @@ class WebviewVC: BaseController{
     
     // MARK: - Helpers
     // 설정, 데이터처리 등 액션 외의 메서드를 정의
+    
+    static func loadWebpage(on webView: WKWebView, url: String) {
+        let myRequest = URLRequest(url: URL(string: url)!)
+        webView.load(myRequest)
+    }
 
 }
 

@@ -275,8 +275,8 @@ extension AppDelegate: MessagingDelegate {
             }
         case "question":
                 //
-            if let questionId: String = aps["questionId"] as? String {
-                return "/community/detail/\(questionId)"
+            if let communityId: String = aps["communityId"] as? String {
+                return "/community/detail/\(communityId)"
             } else {
                 return "/home"
             }
@@ -293,9 +293,9 @@ extension AppDelegate: MessagingDelegate {
                 return "/home"
             }
         case "comment":
-            if let questionId: String = aps["questionId"] as? String,
+            if let communityId: String = aps["communityId"] as? String,
                let _: String = aps["commentId"] as? String {
-                return "/community/detail/\(questionId)"
+                return "/community/detail/\(communityId)"
             } else {
                 return "/home"
             }
@@ -316,8 +316,8 @@ extension AppDelegate: MessagingDelegate {
                 return "/home"
             }
         case "vote":
-            if let questionId: String = aps["questionId"] as? String {
-                return "/community/detail/\(questionId)"
+            if let communityId: String = aps["communityId"] as? String {
+                return "/community/detail/\(communityId)"
             } else {
                 return "/home"
             }

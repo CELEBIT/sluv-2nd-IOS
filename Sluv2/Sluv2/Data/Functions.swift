@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import WebKit
 
 class Functions {
     
@@ -15,7 +16,6 @@ class Functions {
         root.goToUrl = url
         let vc = UINavigationController(rootViewController: root)
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootVC(vc, animated: false)
-        
     }
     
     static func goToLookArdView(from viewController: UIViewController, url: String) {

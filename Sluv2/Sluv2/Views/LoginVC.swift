@@ -92,7 +92,6 @@ class LoginVC: BaseController {
         button.setTitleColor(UIColor(named: "Font-secondary"), for: .normal)
         button.titleLabel?.font = .Body3
         button.setUnderline(text: "로그인 없이 둘러보기")
-        button.addTarget(LoginVC.self, action: #selector(lookArd), for: .touchUpInside)
         
         return button
     }()
@@ -107,12 +106,15 @@ class LoginVC: BaseController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 제스쳐 추가
         let kakaoLogin = UITapGestureRecognizer(target: self, action: #selector(kakaoLogin(_:)))
         kakaoBtn.addGestureRecognizer(kakaoLogin)
         let googleLogin = UITapGestureRecognizer(target: self, action: #selector(googleLogin(_:)))
         googleBtn.addGestureRecognizer(googleLogin)
         let appleLogin = UITapGestureRecognizer(target: self, action: #selector(appleLogin(_:)))
         appleBtn.addGestureRecognizer(appleLogin)
+        // 버튼 액션 추가
+        lookAroundBtn.addTarget(self, action: #selector(lookArd), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -340,7 +342,7 @@ extension LoginVC: ASAuthorizationControllerDelegate {
             let tokenString = String(data: idToken, encoding: .utf8)
 //            print("idToken: ", tokenString ?? "비었음")
 
-            guard let code = credential.authorizationCode else { return }
+            guard credential.authorizationCode != nil else { return }
 //            let codeString = String(data: code, encoding: .utf8)
 //            print("codeString: ", codeString ?? "비었음")
 
